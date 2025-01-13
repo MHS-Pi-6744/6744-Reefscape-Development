@@ -16,8 +16,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -72,6 +73,9 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    SmartDashboard.putNumber("Gyro X Angle", m_gyro.getAngle(IMUAxis.kX));
+    SmartDashboard.putNumber("Gyro Y Angle", m_gyro.getAngle(IMUAxis.kY));
+    SmartDashboard.putNumber("Gyro Z Angle", m_gyro.getAngle(IMUAxis.kZ));
   }
 
   /**
