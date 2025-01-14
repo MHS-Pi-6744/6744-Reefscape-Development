@@ -20,6 +20,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,7 +33,10 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
+    public boolean fieldrelative = true;
+
+
+// The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
@@ -42,8 +46,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
     // Configure the button bindings
-    configureButtonBindings();
+    configureButtonBindings(fieldrelative);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -54,7 +59,7 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
+                fieldrelative),
             m_robotDrive));
   }
 
@@ -67,11 +72,22 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings(boolean fieldrelative) {
     new JoystickButton(m_driverController, Button.kR1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+    new JoystickButton(m_driverController, Button.kCircle.value)
+        .whileTrue(new RunCommand(
+            () -> setRelativeCommandFalse(fieldrelative)));
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whileTrue(new RunCommand(
+            () -> setRelativeCommandTrue(fieldrelative)));
+
+
+    
+
+
   }
 
   /**
@@ -79,6 +95,12 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public boolean setRelativeCommandFalse(boolean fieldrelative){
+    return fieldrelative = false;
+  }
+  public boolean setRelativeCommandTrue(boolean fieldrelative){
+    return fieldrelative = true;
+  }
   public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
