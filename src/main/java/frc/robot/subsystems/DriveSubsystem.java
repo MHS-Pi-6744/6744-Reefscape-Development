@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -42,8 +43,9 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-  // The gyro sensor
+  // The gyro sensors
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+  private final Pigeon2 m_pigeon = new Pigeon2(DriveConstants.kGyroCanId, DriveConstants.kCanBus);
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
