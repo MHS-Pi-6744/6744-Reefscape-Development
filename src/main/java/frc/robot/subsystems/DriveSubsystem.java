@@ -73,9 +73,9 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
-    SmartDashboard.putNumber("Gyro X Angle", m_gyro.getAngle(IMUAxis.kX));
-    SmartDashboard.putNumber("Gyro Y Angle", m_gyro.getAngle(IMUAxis.kY));
-    SmartDashboard.putNumber("Gyro Z Angle", m_gyro.getAngle(IMUAxis.kZ));
+    SmartDashboard.putNumber("ADIS Gyro X Angle", m_gyro.getAngle(IMUAxis.kX));
+    SmartDashboard.putNumber("ADIS Gyro Y Angle", m_gyro.getAngle(IMUAxis.kY));
+    SmartDashboard.putNumber("ADIS Gyro Z Angle", m_gyro.getAngle(IMUAxis.kZ));
   }
 
   /**
