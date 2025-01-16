@@ -72,7 +72,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
-    SmartDashboard.putNumber("Heading", getHeading());
+    SmartDashboard.putNumber("Gyro Heading", getHeading());
+    SmartDashboard.putNumber("Gyro Rate", getTurnRate());
   }
 
   /**
