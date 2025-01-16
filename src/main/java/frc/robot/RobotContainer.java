@@ -15,12 +15,16 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,7 +37,22 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    public boolean fieldrelative = true;
+  
+  public void updateshuffleboard(){
+    SmartDashboard.updateValues();
+  }
+
+  public boolean setRelativeCommandFalse(){
+    return fieldrelative = false;
+  }
+  public boolean setRelativeCommandTrue(){
+    return fieldrelative = true;
+  }
+
+  public boolean fieldrelative = true;
+
+
+
 
 
 // The robot's subsystems
@@ -47,8 +66,9 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
+      
     // Configure the button bindings
-    configureButtonBindings(fieldrelative);
+    configureButtonBindings();
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -72,35 +92,34 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings(boolean fieldrelative) {
-    new JoystickButton(m_driverController, Button.kR1.value)
+  private void configureButtonBindings() {
+    new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+    // x = circle, a = square
     new JoystickButton(m_driverController, Button.kCircle.value)
         .whileTrue(new RunCommand(
-            () -> setRelativeCommandFalse(fieldrelative)));
-    new JoystickButton(m_driverController, Button.kCross.value)
+          () -> setRelativeCommandFalse()));
+    new JoystickButton(m_driverController, Button.kSquare.value)
         .whileTrue(new RunCommand(
-            () -> setRelativeCommandTrue(fieldrelative)));
+          () -> setRelativeCommandTrue()));
+    }
+         
 
-
-    
-
-
-  }
-
-  /**
+        
+          
+            /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public boolean setRelativeCommandFalse(boolean fieldrelative){
-    return fieldrelative = false;
-  }
-  public boolean setRelativeCommandTrue(boolean fieldrelative){
-    return fieldrelative = true;
-  }
+ 
+
+
+
+
   public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
