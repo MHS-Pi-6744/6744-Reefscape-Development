@@ -72,7 +72,7 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
-    SmartDashboard.putNumber("Pigeon Yaw", m_pigeon.getYaw().getValueAsDouble());
+    SmartDashboard.putNumber("Heading", getHeading());
   }
 
   /**
