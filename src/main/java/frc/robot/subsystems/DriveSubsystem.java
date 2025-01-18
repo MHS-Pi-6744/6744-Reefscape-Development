@@ -47,7 +47,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final Pigeon2 m_pigeon = new Pigeon2(DriveConstants.kGyroCanId, DriveConstants.kCanBus);
 
   // Swereve drive sendable for Elastic
-  private final Sendable m_sendable = new Sendable() {
+  private final Sendable m_swerveSendable = new Sendable() {
       @Override
       public void initSendable(SendableBuilder builder) {
         builder.setSmartDashboardType("SwerveDrive");
@@ -98,7 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
         });
     SmartDashboard.putNumber("Gyro Rate", getTurnRate());
     SmartDashboard.putData("Pigeon Gyro", m_pigeon);
-    SmartDashboard.putData("Swerve Drive", m_sendable);
+    SmartDashboard.putData("Swerve Drive", m_swerveSendable);
   }
 
   /**
