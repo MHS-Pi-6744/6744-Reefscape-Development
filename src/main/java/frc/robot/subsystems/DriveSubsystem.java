@@ -4,9 +4,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -67,6 +68,12 @@ public class DriveSubsystem extends SubsystemBase {
         builder.addDoubleProperty("Robot Angle", () -> m_pigeon.getRotation2d().getRadians(), null);
       }
     };
+    private final Sendable m_fieldSendable = new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("Field2d");
+      }
+    };
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -99,6 +106,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Rate", getTurnRate());
     SmartDashboard.putData("Pigeon Gyro", m_pigeon);
     SmartDashboard.putData("Swerve Drive", m_swerveSendable);
+    SmartDashboard.putData("Field", m_fieldSendable);
   }
 
   /**
