@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -68,12 +69,17 @@ public class DriveSubsystem extends SubsystemBase {
         builder.addDoubleProperty("Robot Angle", () -> m_pigeon.getRotation2d().getRadians(), null);
       }
     };
+    private final Field2d m_field = new Field2d();
     private final Sendable m_fieldSendable = new Sendable() {
       @Override
       public void initSendable(SendableBuilder builder) {
-        builder.setSmartDashboardType("Field2d");
-      }
+        m_field.initSendable(builder);
+        m_field.setRobotPose(m_odometry.getPoseMeters());
+      };
     };
+    
+  
+    
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -103,10 +109,11 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    m_field.setRobotPose(m_odometry.getPoseMeters());
     SmartDashboard.putNumber("Gyro Rate", getTurnRate());
     SmartDashboard.putData("Pigeon Gyro", m_pigeon);
     SmartDashboard.putData("Swerve Drive", m_swerveSendable);
-    SmartDashboard.putData("Field", m_fieldSendable);
+    SmartDashboard.putData("Field View", m_fieldSendable);
   }
 
   /**
