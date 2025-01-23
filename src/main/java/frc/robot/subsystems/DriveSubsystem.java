@@ -113,7 +113,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro Rate", getTurnRate());
     SmartDashboard.putData("Pigeon Gyro", m_pigeon);
     SmartDashboard.putData("Swerve Drive", m_swerveSendable);
-    SmartDashboard.putData("Field View", m_fieldSendable);
+    SmartDashboard.putData("Field", m_fieldSendable);
   }
 
   /**
