@@ -78,6 +78,13 @@ public final class Constants {
     
     public static final double kFwdSoftLimit = 0;
     public static final double kRevSoftLimit = 0;
+
+    public static final double kStageLoad = 0;
+    public static final double kStageL1 = 0;
+    public static final double kStageL2 = 0;
+    public static final double kStageL3 = 0;
+    public static final double kStageL4 = 0;
+    public static final double kStageAlgae = 0;
   }
 
   public static final class ModuleConstants {
