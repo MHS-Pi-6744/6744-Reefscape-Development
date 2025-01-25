@@ -13,6 +13,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -35,6 +36,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   private TrapezoidProfile.State m_startState;
   private TrapezoidProfile.State m_endState;
   private TrapezoidProfile.State m_targetState;
+
+  public double k_ElevatorP = ElevatorConstants.kP;
+  public double k_ElevatorI = ElevatorConstants.kI;
+  public double k_ElevatorD = ElevatorConstants.kD;
   
 
   public ElevatorSubsystem() {
@@ -51,7 +56,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
     c_base.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
+      .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
       .outputRange(-1, 1);
     c_base.softLimit
       .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
@@ -99,5 +104,59 @@ public class ElevatorSubsystem extends SubsystemBase {
   
     p_shepherd.setReference(
         m_setpoint, SparkMax.ControlType.kPosition);
+  }
+
+  public void runAutomatic() {
+    double elapsedTime = m_timer.get();
+    if (m_profile.isFinished(elapsedTime)) {
+      m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
+    } else {
+      m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
+    }
+    p_sheep.setReference(
+      m_targetState.position, SparkMax.ControlType.kPosition);
+
+    p_shepherd.setReference(
+      m_targetState.position, SparkMax.ControlType.kPosition);
+  }
+
+  public void setArmCoastMode(){
+    SparkMaxConfig c_mod = new SparkMaxConfig();
+    c_mod.idleMode(IdleMode.kCoast);
+    m_shepherd.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    m_sheep.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setArmBrakeMode(){
+    SparkMaxConfig c_mod = new SparkMaxConfig();
+    c_mod.idleMode(IdleMode.kBrake);
+    m_shepherd.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    m_sheep.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+  }
+  
+  @Override
+  public void periodic() { // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Sheep Position", e_sheep.getPosition());
+    SmartDashboard.putNumber("Shepherd Position", e_shepherd.getPosition());
+    SmartDashboard.putNumber("Sheep Velocity", e_sheep.getVelocity());
+    SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
+
+    SmartDashboard.putNumber("SetPoint", m_setpoint);
+    SmartDashboard.putNumber("P", k_ElevatorP);
+    SmartDashboard.putNumber("I", k_ElevatorI);
+    SmartDashboard.putNumber("D", k_ElevatorD);
+   
+    double m_ElevatorP = SmartDashboard.getNumber("P", ElevatorConstants.kP);
+    if((m_ElevatorP != k_ElevatorP)) {k_ElevatorP = m_ElevatorP; }
+    double m_ElevatorI = SmartDashboard.getNumber("I", ElevatorConstants.kI);
+    if((m_ElevatorI != k_ElevatorI)) {k_ElevatorI = m_ElevatorI; }
+    double m_ElevatorD = SmartDashboard.getNumber("D", ElevatorConstants.kD);
+    if((m_ElevatorD != k_ElevatorD)) {k_ElevatorD = m_ElevatorD; }
+
+    SparkMaxConfig c_pid = new SparkMaxConfig();
+    c_pid.closedLoop.pid(k_ElevatorP, k_ElevatorI, k_ElevatorD);
+    m_shepherd.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    m_sheep.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    
   }
 }
