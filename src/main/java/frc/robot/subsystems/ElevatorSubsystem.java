@@ -30,6 +30,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     shepherdConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+    shepherdConfig.softLimit
+      .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
+      .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
+      .reverseSoftLimitEnabled(true)
+      .forwardSoftLimitEnabled(true);
     SparkMaxConfig sheepConfig = shepherdConfig;
     sheepConfig
       .inverted(true);
@@ -37,6 +42,4 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_shepherd.configure(shepherdConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_sheep.configure(sheepConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
-
-
 }

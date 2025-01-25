@@ -75,6 +75,9 @@ public final class Constants {
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
+    
+    public static final double kFwdSoftLimit = 0;
+    public static final double kRevSoftLimit = 0;
   }
 
   public static final class ModuleConstants {
