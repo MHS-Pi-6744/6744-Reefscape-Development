@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.commands.auto;
 
 import java.util.List;
 
@@ -21,12 +21,12 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AutonomousCommand2 extends Command {
+public class AutonomousCommand extends Command {
 
   private final DriveSubsystem m_robotDrive;
 
   /** Creates a new AutonomousCommand. */
-  public AutonomousCommand2(DriveSubsystem m_robotDrive) {
+  public AutonomousCommand(DriveSubsystem m_robotDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_robotDrive = m_robotDrive;
     addRequirements(m_robotDrive);
@@ -46,9 +46,9 @@ public class AutonomousCommand2 extends Command {
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0.1, .1), new Translation2d(.3, -.1)),
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(.5, 0, new Rotation2d(0)),
+        new Pose2d(3, 0, new Rotation2d(0)),
         config);
 
     var thetaController = new ProfiledPIDController(
