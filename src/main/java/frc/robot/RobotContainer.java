@@ -5,21 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.AutonomousCommand;
-import frc.robot.subsystems.AutonomousCommand2;
-import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.auto.AutonomousCommand;
+import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.subsystems.DriveSubsystem;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -50,11 +46,11 @@ public class RobotContainer {
 
     //m_chooser
 
-    Shuffleboard.getTab("Autonomous").add(m_chooser);
+    // Shuffleboard.getTab("Autonomous").add(m_chooser);
     m_chooser.addOption("Auto", autoCommand);
     m_chooser.addOption("Auto2", autoCommand2);
-
     m_chooser.setDefaultOption("Auto", autoCommand);
+    SmartDashboard.putData("Auto Chooser", m_chooser);
 
 
 
