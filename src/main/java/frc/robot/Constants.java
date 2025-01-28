@@ -79,6 +79,8 @@ public final class Constants {
     public static final double kFwdSoftLimit = 0;
     public static final double kRevSoftLimit = 0;
 
+    public static final double kPositionTolerance = 0;
+
     public static final double kStageLoad = 0;
     public static final double kStageL1 = 0;
     public static final double kStageL2 = 0;
