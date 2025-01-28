@@ -147,11 +147,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("D", k_ElevatorD);
    
     double m_ElevatorP = SmartDashboard.getNumber("P", ElevatorConstants.kP);
-    if((m_ElevatorP != k_ElevatorP)) {k_ElevatorP = m_ElevatorP; }
+    if(m_ElevatorP != k_ElevatorP) {k_ElevatorP = m_ElevatorP; }
     double m_ElevatorI = SmartDashboard.getNumber("I", ElevatorConstants.kI);
-    if((m_ElevatorI != k_ElevatorI)) {k_ElevatorI = m_ElevatorI; }
+    if(m_ElevatorI != k_ElevatorI) {k_ElevatorI = m_ElevatorI; }
     double m_ElevatorD = SmartDashboard.getNumber("D", ElevatorConstants.kD);
-    if((m_ElevatorD != k_ElevatorD)) {k_ElevatorD = m_ElevatorD; }
+    if(m_ElevatorD != k_ElevatorD) {k_ElevatorD = m_ElevatorD; }
 
     SparkMaxConfig c_pid = new SparkMaxConfig();
     c_pid.closedLoop.pid(k_ElevatorP, k_ElevatorI, k_ElevatorD);
