@@ -93,17 +93,21 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_timer.start();
   }
 
+  public boolean atTargetPosition() {
+    return Math.abs(e_shepherd.getPosition() - m_setpoint) < ElevatorConstants.kPositionTolerance;
+  }
+
   public void setTargetPosition(double _setpoint) {
     if (_setpoint != m_setpoint) {
       m_setpoint = _setpoint;
     }
 
     p_sheep.setReference(
-        m_setpoint, SparkMax.ControlType.kPosition);
+      m_setpoint, SparkMax.ControlType.kPosition);
   
   
     p_shepherd.setReference(
-        m_setpoint, SparkMax.ControlType.kPosition);
+      m_setpoint, SparkMax.ControlType.kPosition);
   }
 
   public void runAutomatic() {
