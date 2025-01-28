@@ -16,18 +16,14 @@ public class Setpoint extends Command {
   }
 
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
     m_elevator.setTargetPosition(m_position);
   }
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
