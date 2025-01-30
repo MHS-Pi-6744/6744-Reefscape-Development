@@ -73,7 +73,14 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kR2.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
+            m_robotDrive
+        ));
+    new JoystickButton(m_driverController, Button.kL1.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
+            m_elevator
+        ));
+    
   }
 
   /**
