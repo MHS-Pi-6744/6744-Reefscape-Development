@@ -14,7 +14,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -70,17 +69,17 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR2.value)
+    new JoystickButton(m_driverController, XboxController.Axis.kRightTrigger.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
-    new JoystickButton(m_driverController, Button.kL1.value)
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
-    
+
   }
 
   /**
