@@ -90,7 +90,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public boolean atTargetPosition() {
-    return Math.abs(e_shepherd.getPosition() - m_setpoint) < ElevatorConstants.kPositionTolerance;
+    return Math.abs(((e_shepherd.getPosition() + e_sheep.getPosition()) / 2) - m_setpoint) < ElevatorConstants.kPositionTolerance;
   }
 
   public void setTargetPosition(double _setpoint) {
