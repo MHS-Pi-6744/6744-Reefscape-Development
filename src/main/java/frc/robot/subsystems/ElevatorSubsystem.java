@@ -48,6 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     SparkMaxConfig c_base = new SparkMaxConfig();
 
+    // This config will be applied to both motors
     c_base
       .idleMode(IdleMode.kBrake)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
@@ -67,12 +68,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     c_sheep = c_base;
     c_shepherd = c_base;
 
+    // These configs will be appied to the motors individually
     c_shepherd
       .inverted(false);
     c_sheep
       .inverted(true);
 
-    m_shepherd.configure(c_base, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_shepherd.configure(c_shepherd, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_sheep.configure(c_sheep, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     m_setpoint = ElevatorConstants.kStartingPosition;
