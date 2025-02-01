@@ -145,6 +145,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("P", k_ElevatorP);
     SmartDashboard.putNumber("I", k_ElevatorI);
     SmartDashboard.putNumber("D", k_ElevatorD);
+
+    SmartDashboard.putBoolean("Motors ?=@ Setpoint", atTargetPosition());
    
     double m_ElevatorP = SmartDashboard.getNumber("P", ElevatorConstants.kP);
     if(m_ElevatorP != k_ElevatorP) {k_ElevatorP = m_ElevatorP; }
