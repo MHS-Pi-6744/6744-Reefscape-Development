@@ -46,28 +46,28 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 11;
-    public static final int kRearLeftDrivingCanId = 13;
-    public static final int kFrontRightDrivingCanId = 15;
-    public static final int kRearRightDrivingCanId = 17;
+    public static final int kFrontLeftDrivingCanId = -11; // 11
+    public static final int kRearLeftDrivingCanId = -13; // 13
+    public static final int kFrontRightDrivingCanId = -15; // 15
+    public static final int kRearRightDrivingCanId = -17; // 17
 
-    public static final int kFrontLeftTurningCanId = 10;
-    public static final int kRearLeftTurningCanId = 12;
-    public static final int kFrontRightTurningCanId = 14;
-    public static final int kRearRightTurningCanId = 16;
+    public static final int kFrontLeftTurningCanId = -10; // 10
+    public static final int kRearLeftTurningCanId = -12; // 12
+    public static final int kFrontRightTurningCanId = -14; // 14
+    public static final int kRearRightTurningCanId = -16; //16
 
-    public static final int kGyroCanId = 9;
+    public static final int kGyroCanId = -9; // 9
     public static final String kCanBus = "rio";
 
     public static final boolean kGyroReversed = false;
   }
 
   public static final class ElevatorConstants {
-    public static final int kShepherdCanId = -1;
+    public static final int kShepherdCanId = 8;
     public static final int kSheepCanId = -1;
 
     public static final int kStartingPosition = 0;
-    public static final int kCurrentLimit = 0;
+    public static final int kCurrentLimit = 40;
 
     public static final int kPositionConversionFactor = 0;
     public static final int kVelocityConversionFactor = 0;
@@ -76,16 +76,16 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
     
-    public static final double kFwdSoftLimit = 0;
+    public static final double kFwdSoftLimit = 200;
     public static final double kRevSoftLimit = 0;
 
-    public static final double kPositionTolerance = 0;
+    public static final double kPositionTolerance = 0.05;
 
-    public static final double kStageLoad = 0;
-    public static final double kStageL1 = 0;
-    public static final double kStageL2 = 0;
-    public static final double kStageL3 = 0;
-    public static final double kStageL4 = 0;
+    public static final double kStageLoad = 1;
+    public static final double kStageL1 = 2;
+    public static final double kStageL2 = 3;
+    public static final double kStageL3 = 4;
+    public static final double kStageL4 = 5;
     public static final double kStageAlgae = 0;
   }
 

@@ -90,7 +90,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public boolean atTargetPosition() {
-    return Math.abs(((e_shepherd.getPosition() + e_sheep.getPosition()) / 2) - m_setpoint) < ElevatorConstants.kPositionTolerance;
+    return Math.abs(((e_shepherd.getPosition())) - m_setpoint) < ElevatorConstants.kPositionTolerance;
   }
 
   public void setTargetPosition(double _setpoint) {
@@ -107,17 +107,19 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void runAutomatic() {
-    double elapsedTime = m_timer.get();
-    if (m_profile.isFinished(elapsedTime)) {
-      m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
-    } else {
-      m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
-    }
-    p_sheep.setReference(
-      m_targetState.position, SparkMax.ControlType.kPosition);
+    if (m_profile != null) {
+      double elapsedTime = m_timer.get();
+      if (m_profile.isFinished(elapsedTime)) {
+        m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
+      } else {
+        m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
+      }
+      p_sheep.setReference(
+        m_targetState.position, SparkMax.ControlType.kPosition);
 
-    p_shepherd.setReference(
-      m_targetState.position, SparkMax.ControlType.kPosition);
+      p_shepherd.setReference(
+        m_targetState.position, SparkMax.ControlType.kPosition);
+    }
   }
 
   public void setArmCoastMode(){
@@ -147,18 +149,20 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("D", k_ElevatorD);
 
     SmartDashboard.putBoolean("Motors ?=@ Setpoint", atTargetPosition());
-   
-    double m_ElevatorP = SmartDashboard.getNumber("P", ElevatorConstants.kP);
+
+    
+    /*
+    double m_ElevatorP = SmartDashboard.getNumber("P", k_ElevatorP);
     if(m_ElevatorP != k_ElevatorP) {k_ElevatorP = m_ElevatorP; }
-    double m_ElevatorI = SmartDashboard.getNumber("I", ElevatorConstants.kI);
+    double m_ElevatorI = SmartDashboard.getNumber("I", k_ElevatorI);
     if(m_ElevatorI != k_ElevatorI) {k_ElevatorI = m_ElevatorI; }
-    double m_ElevatorD = SmartDashboard.getNumber("D", ElevatorConstants.kD);
+    double m_ElevatorD = SmartDashboard.getNumber("D", k_ElevatorD);
     if(m_ElevatorD != k_ElevatorD) {k_ElevatorD = m_ElevatorD; }
 
     SparkMaxConfig c_pid = new SparkMaxConfig();
     c_pid.closedLoop.pid(k_ElevatorP, k_ElevatorI, k_ElevatorD);
     m_shepherd.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     m_sheep.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    
+    */
   }
 }
