@@ -53,7 +53,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       .idleMode(IdleMode.kBrake)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
     c_base.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
       .outputRange(-1, 1);
     c_base.softLimit
