@@ -24,7 +24,25 @@ import frc.robot.subsystems.DriveSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
+  
+  public void updateshuffleboard(){
+    SmartDashboard.updateValues();
+  }
+
+  public boolean setRelativeCommandFalse(){
+    return fieldrelative = false;
+  }
+  public boolean setRelativeCommandTrue(){
+    return fieldrelative = true;
+  }
+
+  public boolean fieldrelative = true;
+
+
+
+
+
+// The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
@@ -70,7 +88,7 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
+                fieldrelative),
             m_robotDrive));
   }
 
@@ -84,7 +102,7 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+    new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
