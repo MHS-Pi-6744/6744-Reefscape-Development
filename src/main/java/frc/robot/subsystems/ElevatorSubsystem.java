@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -24,8 +24,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkClosedLoopController p_shepherd;
   private SparkClosedLoopController p_sheep;
 
-  private RelativeEncoder e_shepherd;
-  private RelativeEncoder e_sheep;
+  private AbsoluteEncoder e_shepherd;
+  private AbsoluteEncoder e_sheep;
 
   private SparkMaxConfig c_shepherd;
   private SparkMaxConfig c_sheep;
@@ -52,9 +52,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     c_base
       .idleMode(IdleMode.kBrake)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
-    c_base.encoder
-      .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
-      .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
     c_base.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
@@ -82,11 +79,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     p_shepherd = m_shepherd.getClosedLoopController();
     p_sheep = m_sheep.getClosedLoopController();
 
-    e_shepherd = m_shepherd.getEncoder();
-    e_sheep = m_sheep.getEncoder();
-
-    e_shepherd.setPosition(m_setpoint);
-    e_sheep.setPosition(m_setpoint);
+    e_shepherd = m_shepherd.getAbsoluteEncoder();
+    e_sheep = m_sheep.getAbsoluteEncoder();
     
     p_shepherd.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
     p_sheep.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
