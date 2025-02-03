@@ -11,9 +11,13 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -35,12 +39,12 @@ public class ElevatorSubsystem extends SubsystemBase {
   private Timer m_timer;
   private TrapezoidProfile.State m_startState;
   private TrapezoidProfile.State m_endState;
-  private TrapezoidProfile.State m_targetState;
 
   public double k_ElevatorP = ElevatorConstants.kP;
   public double k_ElevatorI = ElevatorConstants.kI;
   public double k_ElevatorD = ElevatorConstants.kD;
   
+  public ElevatorFeedforward feedforward = new ElevatorFeedforward(ElevatorConstants.kS, ElevatorConstants.kG, ElevatorConstants.kV, ElevatorConstants.kA);
 
   public ElevatorSubsystem() {
     m_shepherd = new SparkMax(ElevatorConstants.kShepherdCanId, SparkMax.MotorType.kBrushless);
@@ -106,6 +110,35 @@ public class ElevatorSubsystem extends SubsystemBase {
       m_setpoint, SparkMax.ControlType.kPosition);
   }
 
+    
+
+  public void setDriveStates(TrapezoidProfile.State start, TrapezoidProfile.State end) {
+    m_shepherd.setSetpoint(
+        ExampleSmartMotorController.PIDMode.kPosition,
+        start.position,
+        m_feedforward.calculateWithVelocities(start.velocity, end.velocity) / RobotController.getBatteryVoltage());
+  }
+
+  public Command profiledDriveDistance(double distance) {
+    return startRun(
+            () -> {
+              // Restart timer so profile setpoints start at the beginning
+              m_timer.restart();
+            },
+            () -> {
+              // Current state never changes, so we need to use a timer to get the setpoints we need
+              // to be at
+              var currentTime = m_timer.get();
+              var currentSetpoint =
+                  m_profile.calculate(currentTime, new State(), new State(distance, 0));
+              var nextSetpoint =
+                  m_profile.calculate(
+                      currentTime + 2, new State(), new State(distance, 0));
+              setDriveStates(currentSetpoint, currentSetpoint, nextSetpoint, nextSetpoint);
+            })
+        .until(() -> m_profile.isFinished(0));
+  }
+
   public void runAutomatic() {
     if (m_profile != null) {
       double elapsedTime = m_timer.get();
@@ -149,7 +182,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("D", k_ElevatorD);
 
     SmartDashboard.putBoolean("Motors ?=@ Setpoint", atTargetPosition());
-
     
     /*
     double m_ElevatorP = SmartDashboard.getNumber("P", k_ElevatorP);

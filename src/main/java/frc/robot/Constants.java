@@ -69,14 +69,19 @@ public final class Constants {
     public static final int kStartingPosition = 0;
     public static final int kCurrentLimit = 40;
 
-    public static final int kPositionConversionFactor = 0;
-    public static final int kVelocityConversionFactor = 0;
+    public static final int kPositionConversionFactor = 360;
+    public static final int kVelocityConversionFactor = 1;
     
-    public static final double kP = 0;
+    public static final double kP = 1;
     public static final double kI = 0;
     public static final double kD = 0;
+
+    public static final double kS = 0;
+    public static final double kA = 0;
+    public static final double kV = 0;
+    public static final double kG = 0;
     
-    public static final double kFwdSoftLimit = 200;
+    public static final double kFwdSoftLimit = 6;
     public static final double kRevSoftLimit = 0;
 
     public static final double kPositionTolerance = 0.05;
