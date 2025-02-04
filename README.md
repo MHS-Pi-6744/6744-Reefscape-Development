@@ -1,7 +1,7 @@
 # Mehville RC 6744 Reefscape Development 2025
-Updated 1/16/25
+Updated 02/04/25
 
-This project will develop software to run the Mehlville RC Reefscape robot. The Robot will feature swerve drive and an elevator with a manipulator to take-in and deposit coral elements. REVrobotics/MAXSwerve-Java-Template provided the starting place for this effort.
+This project will develop software to run the Mehlville RC Reefscape robot. The Robot will feature swerve drive and an elevator with a manipulator to take-in and deposit  coral elements. REVrobotics/MAXSwerve-Java-Template provided the starting place for this effort.
 ### Development approach
 The team will code and test all new features and fixes on specific feature branches. The several feature branches will be integrated and tested as a system on an integrate branch.
 ### GitHub Best Practices
@@ -49,7 +49,12 @@ The team will code and test all new features and fixes on specific feature branc
   - All other persons pull person N-1’s commits and resolve merge conflicts
   - Person N Pushes their commits
   - All persons can now leave
+#### Issues:
+- When making issues, Make sure the title is consice but informative. Put more information in the PR Description
+- Make sure to link a branch to your Issue so that we can see the progress 
+- Make sub-issues if needed
 #### Merging/PRs:
-- Please test your code before making a PR
+- Make a PR Drafts with an issue attached
+- Please test your code before marking your PR as ready
 - Keep your title concise and on topic with extra info in the description
-- There are protections on main so that people cannot add commits by themselves, the commits must be checked by a different member
+- There are protections on main so that people cannot add commits by themselves, the commits must be checked by two different members
