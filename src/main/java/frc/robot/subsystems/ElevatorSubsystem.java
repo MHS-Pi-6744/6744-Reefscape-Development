@@ -11,13 +11,9 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -38,13 +34,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   private TrapezoidProfile m_profile;
   private Timer m_timer;
   private TrapezoidProfile.State m_startState;
-  private TrapezoidProfile.State m_endState;
+  private TrapezoidProfile.State m_targetState;
 
   public double k_ElevatorP = ElevatorConstants.kP;
   public double k_ElevatorI = ElevatorConstants.kI;
   public double k_ElevatorD = ElevatorConstants.kD;
-  
-  public ElevatorFeedforward feedforward = new ElevatorFeedforward(ElevatorConstants.kS, ElevatorConstants.kG, ElevatorConstants.kV, ElevatorConstants.kA);
 
   public ElevatorSubsystem() {
     m_shepherd = new SparkMax(ElevatorConstants.kShepherdCanId, SparkMax.MotorType.kBrushless);
@@ -56,10 +50,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     c_base
       .idleMode(IdleMode.kBrake)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
+    c_base.absoluteEncoder
+      .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+      .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
     c_base.closedLoop
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
-      .outputRange(-1, 1);
+      .outputRange(-1, 1)
+      .positionWrappingEnabled(true);
     c_base.softLimit
       .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
       .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
@@ -79,6 +77,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_sheep.configure(c_sheep, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     m_setpoint = ElevatorConstants.kStartingPosition;
+    m_profile = new TrapezoidProfile(ElevatorConstants.kProfileConfig);
+
+    m_startState = new TrapezoidProfile.State();
+    m_targetState = new TrapezoidProfile.State();
 
     p_shepherd = m_shepherd.getClosedLoopController();
     p_sheep = m_sheep.getClosedLoopController();
@@ -101,58 +103,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     if (_setpoint != m_setpoint) {
       m_setpoint = _setpoint;
     }
-
-    p_sheep.setReference(
-      m_setpoint, SparkMax.ControlType.kPosition);
-  
-  
-    p_shepherd.setReference(
-      m_setpoint, SparkMax.ControlType.kPosition);
   }
 
-    
-
-  public void setDriveStates(TrapezoidProfile.State start, TrapezoidProfile.State end) {
-    m_shepherd.setSetpoint(
-        ExampleSmartMotorController.PIDMode.kPosition,
-        start.position,
-        m_feedforward.calculateWithVelocities(start.velocity, end.velocity) / RobotController.getBatteryVoltage());
-  }
-
-  public Command profiledDriveDistance(double distance) {
-    return startRun(
-            () -> {
-              // Restart timer so profile setpoints start at the beginning
-              m_timer.restart();
-            },
-            () -> {
-              // Current state never changes, so we need to use a timer to get the setpoints we need
-              // to be at
-              var currentTime = m_timer.get();
-              var currentSetpoint =
-                  m_profile.calculate(currentTime, new State(), new State(distance, 0));
-              var nextSetpoint =
-                  m_profile.calculate(
-                      currentTime + 2, new State(), new State(distance, 0));
-              setDriveStates(currentSetpoint, currentSetpoint, nextSetpoint, nextSetpoint);
-            })
-        .until(() -> m_profile.isFinished(0));
-  }
-
-  public void runAutomatic() {
-    if (m_profile != null) {
-      double elapsedTime = m_timer.get();
-      if (m_profile.isFinished(elapsedTime)) {
-        m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
-      } else {
-        m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
-      }
-      p_sheep.setReference(
-        m_targetState.position, SparkMax.ControlType.kPosition);
-
-      p_shepherd.setReference(
-        m_targetState.position, SparkMax.ControlType.kPosition);
-    }
+  public void runAutomatic(double targetPosition) {
+    m_targetState = new TrapezoidProfile.State(targetPosition, 0);
+    m_startState = m_profile.calculate(1, m_startState, m_targetState);
+    p_shepherd.setReference(m_targetState.position, ControlType.kPosition);
   }
 
   public void setArmCoastMode(){
@@ -181,7 +137,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("I", k_ElevatorI);
     SmartDashboard.putNumber("D", k_ElevatorD);
 
+    runAutomatic(m_setpoint);
+
     SmartDashboard.putBoolean("Motors ?=@ Setpoint", atTargetPosition());
+    SmartDashboard.putNumber("Start State", m_startState.position);
+    SmartDashboard.putNumber("Target State", m_targetState.position);
     
     /*
     double m_ElevatorP = SmartDashboard.getNumber("P", k_ElevatorP);

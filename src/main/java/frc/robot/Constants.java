@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -76,22 +77,19 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
 
-    public static final double kS = 0;
-    public static final double kA = 0;
-    public static final double kV = 0;
-    public static final double kG = 0;
+    public static final Constraints kProfileConfig = new Constraints(1, 1);
     
     public static final double kFwdSoftLimit = 6;
     public static final double kRevSoftLimit = 0;
 
-    public static final double kPositionTolerance = 0.05;
+    public static final double kPositionTolerance = 0.1;
 
-    public static final double kStageLoad = 1;
-    public static final double kStageL1 = 2;
-    public static final double kStageL2 = 3;
-    public static final double kStageL3 = 4;
-    public static final double kStageL4 = 5;
-    public static final double kStageAlgae = 0;
+    public static final double kStageAlgae = 45;
+    public static final double kStageLoad = kStageAlgae*2;
+    public static final double kStageL1 = kStageAlgae*3;
+    public static final double kStageL2 = kStageAlgae*4;
+    public static final double kStageL3 = kStageAlgae*5;
+    public static final double kStageL4 = kStageAlgae*6;    
   }
 
   public static final class ModuleConstants {
