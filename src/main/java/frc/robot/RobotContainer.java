@@ -16,6 +16,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
 import frc.robot.subsystems.DriveSubsystem;
+//import frc.robot.BuildConstants;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -116,7 +117,13 @@ public class RobotContainer {
   }
 
 
+    // Print Git Data
 
-
+  public void printGitData() {
+    System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
+    System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
+    System.out.println("Git Date:" + BuildConstants.GIT_DATE);
+    System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+  };
   
 }
