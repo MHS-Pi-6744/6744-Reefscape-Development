@@ -97,27 +97,27 @@ public class RobotContainer {
         ));
     new JoystickButton(m_driverController, XboxController.Button.kA.value)
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
+            () -> m_elevator.trapezoidalMovemnt(ElevatorConstants.kStageL1),
             m_elevator
         ));
     new JoystickButton(m_driverController, XboxController.Button.kB.value)
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
+            () -> m_elevator.trapezoidalMovemnt(ElevatorConstants.kStageL2),
             m_elevator
         ));
     new JoystickButton(m_driverController, XboxController.Button.kX.value)
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
+            () -> m_elevator.trapezoidalMovemnt(ElevatorConstants.kStageL3),
             m_elevator
         ));
     new JoystickButton(m_driverController, XboxController.Button.kY.value)
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
+            () -> m_elevator.trapezoidalMovemnt(ElevatorConstants.kStageL4),
             m_elevator
         ));
     new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
+            () -> m_elevator.trapezoidalMovemnt(ElevatorConstants.kStageAlgae),
             m_elevator
         ));
   }

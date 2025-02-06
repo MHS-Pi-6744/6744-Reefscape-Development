@@ -75,7 +75,12 @@ public final class Constants {
     
     public static final double kP = 1;
     public static final double kI = 0;
-    public static final double kD = 0;
+    public static final double kD = 0.5;
+    
+    public static final double kS = 0.5;
+    public static final double kG = 0.5;    
+    public static final double kV = 0.5;
+    public static final double kDt = 1;
 
     public static final Constraints kProfileConfig = new Constraints(1, 1);
     
@@ -89,7 +94,7 @@ public final class Constants {
     public static final double kStageL1 = kStageAlgae*3;
     public static final double kStageL2 = kStageAlgae*4;
     public static final double kStageL3 = kStageAlgae*5;
-    public static final double kStageL4 = kStageAlgae*6;    
+    public static final double kStageL4 = kStageAlgae*6;
   }
 
   public static final class ModuleConstants {
