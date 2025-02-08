@@ -85,31 +85,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     return Math.abs(e_shepherd.getPosition() - m_setpoint) < ElevatorConstants.kPositionTolerance;
   }
 
-  public void setTargetPosition(double _setpoint) {
-    if (_setpoint != m_setpoint) {
-      m_setpoint = _setpoint;
-    }
-
-    p_sheep.setReference(
-      m_setpoint, SparkMax.ControlType.kPosition);
-  
-  
-    p_shepherd.setReference(
-      m_setpoint, SparkMax.ControlType.kPosition);
+  public Command setTargetPosition(double setpoint) {
+    return this.runOnce( () -> m_setpoint = setpoint);
   }
 
-  public void runAutomatic() {
-    double elapsedTime = m_timer.get();
-    if (m_profile.isFinished(elapsedTime)) {
-      m_targetState = new TrapezoidProfile.State(m_setpoint, 0.0);
-    } else {
-      m_targetState = m_profile.calculate(elapsedTime, m_startState, m_endState);
-    }
-    p_sheep.setReference(
-      m_targetState.position, SparkMax.ControlType.kPosition);
-
-    p_shepherd.setReference(
-      m_targetState.position, SparkMax.ControlType.kPosition);
+  private void moveToSetpoint() {
+    p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
   public void setArmCoastMode(){
@@ -133,6 +114,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Sheep Velocity", e_sheep.getVelocity());
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
 
+    moveToSetpoint();
     SmartDashboard.putNumber("SetPoint", m_setpoint);
     SmartDashboard.putNumber("P", k_ElevatorP);
     SmartDashboard.putNumber("I", k_ElevatorI);
