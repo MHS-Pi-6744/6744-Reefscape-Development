@@ -31,11 +31,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkMaxConfig c_sheep;
 
   private double m_setpoint;
-  private TrapezoidProfile m_profile;
-  private Timer m_timer;
-  private TrapezoidProfile.State m_startState;
-  private TrapezoidProfile.State m_endState;
-  private TrapezoidProfile.State m_targetState;
 
   public double k_ElevatorP = ElevatorConstants.kP;
   public double k_ElevatorI = ElevatorConstants.kI;
@@ -84,9 +79,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     
     p_shepherd.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
     p_sheep.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
-
-    m_timer = new Timer();
-    m_timer.start();
   }
 
   public boolean atTargetPosition() {
