@@ -43,12 +43,21 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     // This config will be applied to both motors
     c_base
-      .idleMode(IdleMode.kBrake)
+      .idleMode(IdleMode.kCoast)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
+    c_base.absoluteEncoder
+        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
+        .zeroOffset(300/360)
+        .inverted(true);
     c_base.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
-      .outputRange(-1, 1);
+      .outputRange(-1, 1)
+      .maxMotion    
+      .maxVelocity(4200)
+      .maxAcceleration(6000)
+      .allowedClosedLoopError(0.5);
     c_base.softLimit
       .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
       .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
@@ -74,9 +83,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_shepherd = m_shepherd.getAbsoluteEncoder();
     e_sheep = m_sheep.getAbsoluteEncoder();
-    
-    p_shepherd.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
-    p_sheep.setReference(ElevatorConstants.kStartingPosition, ControlType.kPosition);
   }
 
   public boolean atTargetPosition() {
@@ -88,6 +94,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   private void moveToSetpoint() {
+    System.out.println(m_setpoint);
+    System.out.println(e_shepherd.getPosition());
     p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
@@ -107,28 +115,11 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   @Override
   public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Sheep Position", e_sheep.getPosition());
     SmartDashboard.putNumber("Shepherd Position", e_shepherd.getPosition());
-    SmartDashboard.putNumber("Sheep Velocity", e_sheep.getVelocity());
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
+    SmartDashboard.putNumber("Setpoint", m_setpoint);
+    SmartDashboard.putBoolean("At Target", atTargetPosition());
 
     moveToSetpoint();
-    SmartDashboard.putNumber("SetPoint", m_setpoint);
-    SmartDashboard.putNumber("P", k_ElevatorP);
-    SmartDashboard.putNumber("I", k_ElevatorI);
-    SmartDashboard.putNumber("D", k_ElevatorD);
-   
-    double m_ElevatorP = SmartDashboard.getNumber("P", ElevatorConstants.kP);
-    if(m_ElevatorP != k_ElevatorP) {k_ElevatorP = m_ElevatorP; }
-    double m_ElevatorI = SmartDashboard.getNumber("I", ElevatorConstants.kI);
-    if(m_ElevatorI != k_ElevatorI) {k_ElevatorI = m_ElevatorI; }
-    double m_ElevatorD = SmartDashboard.getNumber("D", ElevatorConstants.kD);
-    if(m_ElevatorD != k_ElevatorD) {k_ElevatorD = m_ElevatorD; }
-
-    SparkMaxConfig c_pid = new SparkMaxConfig();
-    c_pid.closedLoop.pid(k_ElevatorP, k_ElevatorI, k_ElevatorD);
-    m_shepherd.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    m_sheep.configure(c_pid, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    
   }
 }

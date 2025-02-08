@@ -63,30 +63,30 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int kShepherdCanId = -1;
+    public static final int kShepherdCanId = 8;
     public static final int kSheepCanId = -1;
 
     public static final int kStartingPosition = 0;
-    public static final int kCurrentLimit = 0;
+    public static final int kCurrentLimit = 50;
 
-    public static final int kPositionConversionFactor = 0;
-    public static final int kVelocityConversionFactor = 0;
+    public static final int kPositionConversionFactor = 360;
+    public static final int kVelocityConversionFactor = 100;
     
-    public static final double kP = 0;
+    public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
     
-    public static final double kFwdSoftLimit = 0;
-    public static final double kRevSoftLimit = 0;
+    public static final double kFwdSoftLimit = 1000;
+    public static final double kRevSoftLimit = 1000;
 
-    public static final double kPositionTolerance = 0;
+    public static final double kPositionTolerance = 0.05;
 
     public static final double kStageLoad = 0;
-    public static final double kStageL1 = 0;
-    public static final double kStageL2 = 0;
-    public static final double kStageL3 = 0;
-    public static final double kStageL4 = 0;
-    public static final double kStageAlgae = 0;
+    public static final double kStageL1 = 45;
+    public static final double kStageL2 = 90;
+    public static final double kStageL3 = 135;
+    public static final double kStageL4 = 180;
+    public static final double kStageAlgae = 225;
   }
 
   public static final class ModuleConstants {
