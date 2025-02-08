@@ -11,8 +11,6 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
@@ -85,8 +83,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     return Math.abs(e_shepherd.getPosition() - m_setpoint) < ElevatorConstants.kPositionTolerance;
   }
 
-  public Command setTargetPosition(double setpoint) {
-    return this.runOnce( () -> m_setpoint = setpoint);
+  public void setTargetPosition(double setpoint) {
+    m_setpoint = setpoint;
   }
 
   private void moveToSetpoint() {
