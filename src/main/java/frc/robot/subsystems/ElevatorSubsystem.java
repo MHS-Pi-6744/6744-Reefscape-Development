@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -57,7 +58,8 @@ public class ElevatorSubsystem extends SubsystemBase {
       .maxMotion    
       .maxVelocity(4200)
       .maxAcceleration(6000)
-      .allowedClosedLoopError(0.5);
+      .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+      .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
     c_base.softLimit
       .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
       .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
@@ -119,7 +121,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
-
     moveToSetpoint();
   }
 }
