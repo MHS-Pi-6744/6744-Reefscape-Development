@@ -17,8 +17,8 @@ public final class Constants {
   public static final class DriveConstants {
     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.
-    public static final double kMaxSpeedMetersPerSecond = 1; // originally 4.8    TUNING
-    public static final double kMaxAngularSpeed = Math.PI/2 ; // radians per second    originally 2*Pi   TUNING
+    public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
+    public static final double kMaxAngularSpeed = Math.PI/0.4 ; // radians per second    originally 2*Pi   TUNING
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
@@ -58,7 +58,7 @@ public final class Constants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
     // more teeth will result in a robot that drives faster).
-    public static final int kDrivingMotorPinionTeeth = 14;
+    public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;

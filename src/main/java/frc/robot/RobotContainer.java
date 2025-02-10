@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
@@ -68,6 +70,9 @@ public class RobotContainer {
     m_chooser.addOption("Auto", autoCommand);
     m_chooser.addOption("Auto2", autoCommand2);
     m_chooser.setDefaultOption("Auto", autoCommand);
+    m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
+    m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
 
