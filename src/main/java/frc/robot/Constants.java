@@ -70,23 +70,23 @@ public final class Constants {
     public static final int kCurrentLimit = 50;
 
     public static final int kPositionConversionFactor = 360;
-    public static final int kVelocityConversionFactor = 1000;
+    public static final int kVelocityConversionFactor = 10000;
     
-    public static final double kP = 0.1;
+    public static final double kP = 0.05;
     public static final double kI = 0;
     public static final double kD = 0;
     
     public static final double kFwdSoftLimit = 1000;
-    public static final double kRevSoftLimit = 1000;
+    public static final double kRevSoftLimit = -1000;
 
-    public static final double kPositionTolerance = 0.05;
+    public static final double kPositionTolerance = 0.5;
 
     public static final double kStageLoad = 0;
     public static final double kStageL1 = 45;
     public static final double kStageL2 = 90;
     public static final double kStageL3 = 135;
     public static final double kStageL4 = 180;
-    public static final double kStageAlgae = 225;
+    public static final double kStageAlgae = 360;
   }
 
   public static final class ModuleConstants {

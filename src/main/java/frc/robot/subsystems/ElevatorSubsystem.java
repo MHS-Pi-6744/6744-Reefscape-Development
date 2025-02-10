@@ -5,6 +5,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
@@ -96,8 +97,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   private void moveToSetpoint() {
-    System.out.println(m_setpoint);
-    System.out.println(e_shepherd.getPosition());
     p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
