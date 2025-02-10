@@ -96,4 +96,12 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  // Coral shooter command constants
+  public static final class ShooterConstants {
+    public static final int Shooter_CANID = 5; 
+    public static final double k_shooterSpeed = 0.6; // percent
+    public static final double k_slowShooter = 0.1; // percent
+    //  public static final double k_shootDistance = 4.0; //inches (for later)
+  }
 }
