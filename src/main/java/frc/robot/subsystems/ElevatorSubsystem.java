@@ -5,7 +5,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
@@ -24,8 +24,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkClosedLoopController p_shepherd;
   private SparkClosedLoopController p_sheep;
 
-  private AbsoluteEncoder e_shepherd;
-  private AbsoluteEncoder e_sheep;
+  private SparkAbsoluteEncoder e_shepherd;
+  private SparkAbsoluteEncoder e_sheep;
 
   private SparkMaxConfig c_shepherd;
   private SparkMaxConfig c_sheep;
@@ -50,7 +50,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     c_base.absoluteEncoder
         .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
         .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
-        .zeroOffset(300/360)
         .inverted(true);
     c_base.closedLoop
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
@@ -118,6 +117,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() { // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shepherd Position", e_shepherd.getPosition());
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
+    SmartDashboard.putNumber("I Accumulator", p_shepherd.getIAccum());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
     moveToSetpoint();
