@@ -73,6 +73,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kDriverController2Port = 1;
     public static final double kDriveDeadband = 0.05;   //  TUNING
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
