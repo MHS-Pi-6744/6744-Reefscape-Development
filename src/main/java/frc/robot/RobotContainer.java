@@ -112,6 +112,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController2, XboxController.Button.kB.value)
         .toggleOnTrue(new RunCommand(
             () -> m_shooter.shooterCommand()));
+    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
+          .toggleOnTrue(new RunCommand(
+            () -> m_shooter.shooterReleaseCommand()));
+
+
+
+  
 
   }
 
