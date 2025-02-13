@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -27,6 +28,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkAbsoluteEncoder e_shepherd;
   private SparkAbsoluteEncoder e_sheep;
 
+  private RelativeEncoder r_shepherd;
+  private RelativeEncoder r_sheep;
+
   private SparkMaxConfig c_shepherd;
   private SparkMaxConfig c_sheep;
 
@@ -45,18 +49,21 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     // This config will be applied to both motors
     c_base
-      .idleMode(IdleMode.kCoast)
+      .idleMode(IdleMode.kBrake)
       .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
     c_base.absoluteEncoder
-        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
-        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
-        .inverted(true);
+      .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+      .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
+      .inverted(true);
+    c_base.encoder
+      .positionConversionFactor(24)
+      .velocityConversionFactor(24);
     c_base.closedLoop
-      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
       .outputRange(-1, 1)
       .maxMotion    
-      .maxVelocity(4200)
+      .maxVelocity(800)
       .maxAcceleration(6000)
       .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
       .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
@@ -83,8 +90,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     p_shepherd = m_shepherd.getClosedLoopController();
     p_sheep = m_sheep.getClosedLoopController();
 
+    r_shepherd = m_shepherd.getEncoder();
+    r_sheep = m_sheep.getEncoder();
+
     e_shepherd = m_shepherd.getAbsoluteEncoder();
     e_sheep = m_sheep.getAbsoluteEncoder();
+
+    r_shepherd.setPosition(e_shepherd.getPosition());
+    r_sheep.setPosition(e_sheep.getPosition());
   }
 
   public boolean atTargetPosition() {
@@ -117,6 +130,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() { // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shepherd Position", e_shepherd.getPosition());
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
+    SmartDashboard.putNumber("Relative Shepherd Position", r_shepherd.getPosition());
+    SmartDashboard.putNumber("Relative Shepherd Velocity", r_shepherd.getVelocity());
     SmartDashboard.putNumber("I Accumulator", p_shepherd.getIAccum());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());

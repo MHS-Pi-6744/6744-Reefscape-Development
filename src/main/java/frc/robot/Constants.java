@@ -76,17 +76,17 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
     
-    public static final double kFwdSoftLimit = 361;
-    public static final double kRevSoftLimit = 0;
+    public static final double kFwdSoftLimit = 3600;
+    public static final double kRevSoftLimit = -3600;
 
     public static final double kPositionTolerance = 0.5;
 
     public static final double kStageLoad = 0;
-    public static final double kStageL1 = 45;
-    public static final double kStageL2 = 90;
-    public static final double kStageL3 = 135;
-    public static final double kStageL4 = 180;
-    public static final double kStageAlgae = 360;
+    public static final double kStageL1 = 180;
+    public static final double kStageL2 = 360;
+    public static final double kStageL3 = 180*3;
+    public static final double kStageL4 = 180*4;
+    public static final double kStageAlgae = 180*5;
   }
 
   public static final class ModuleConstants {
