@@ -60,12 +60,12 @@ public final class Constants {
     public static final int kSheepCanId = -1;
 
     public static final int kStartingPosition = 0;
-    public static final int kCurrentLimit = 40;
+    public static final int kCurrentLimit = 50;
 
     public static final int kPositionConversionFactor = 360;
-    public static final int kVelocityConversionFactor = 1;
+    public static final int kVelocityConversionFactor = 1000;
     
-    public static final double kP = 1;
+    public static final double kP = 0.05;
     public static final double kI = 0;
     public static final double kD = 0.5;
     
@@ -76,17 +76,17 @@ public final class Constants {
 
     public static final Constraints kProfileConfig = new Constraints(1, 1);
     
-    public static final double kFwdSoftLimit = 6;
-    public static final double kRevSoftLimit = 0;
+    public static final double kFwdSoftLimit = 3600;
+    public static final double kRevSoftLimit = -3600;
 
-    public static final double kPositionTolerance = 0.1;
+    public static final double kPositionTolerance = 0.5;
 
-    public static final double kStageAlgae = 45;
-    public static final double kStageLoad = kStageAlgae*2;
-    public static final double kStageL1 = kStageAlgae*3;
-    public static final double kStageL2 = kStageAlgae*4;
-    public static final double kStageL3 = kStageAlgae*5;
-    public static final double kStageL4 = kStageAlgae*6;
+    public static final double kStageLoad = 0;
+    public static final double kStageL1 = 180;
+    public static final double kStageL2 = 360;
+    public static final double kStageL3 = 180*3;
+    public static final double kStageL4 = 180*4;
+    public static final double kStageAlgae = 180*5;
   }
 
   public static final class ModuleConstants {
