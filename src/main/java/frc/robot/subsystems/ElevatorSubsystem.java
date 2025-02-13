@@ -34,8 +34,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkMaxConfig c_shepherd;
   private SparkMaxConfig c_sheep;
 
-  private ElevatorFeedforward f_eedForward;
-
   private double m_setpoint;
 
   public double k_ElevatorP = ElevatorConstants.kP;
@@ -87,10 +85,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     m_sheep.configure(c_sheep, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     m_setpoint = ElevatorConstants.kStartingPosition;
-    m_profile = new TrapezoidProfile(ElevatorConstants.kProfileConfig);
-
-    s_setpoint = new TrapezoidProfile.State();
-    s_goal = new TrapezoidProfile.State();
 
     p_shepherd = m_shepherd.getClosedLoopController();
     p_sheep = m_sheep.getClosedLoopController();
