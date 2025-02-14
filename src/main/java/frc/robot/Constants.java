@@ -67,9 +67,7 @@ public final class Constants {
     
     public static final double kP = 0.05;
     public static final double kI = 0;
-    public static final double kD = 0.5;
-    
-    public static final Constraints kProfileConfig = new Constraints(1, 1);
+    public static final double kD = 0.0;
     
     public static final double kFwdSoftLimit = 3600;
     public static final double kRevSoftLimit = -3600;
