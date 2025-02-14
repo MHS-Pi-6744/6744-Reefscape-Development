@@ -9,6 +9,18 @@
           "data": {
             "pathName": "DR-Wait Path"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonomousCommand2"
+          }
         }
       ]
     }

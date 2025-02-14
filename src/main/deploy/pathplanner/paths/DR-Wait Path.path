@@ -16,28 +16,28 @@
     },
     {
       "anchor": {
-        "x": 5.782051282051282,
-        "y": 3.9630769230769234
+        "x": 5.88525641025641,
+        "y": 4.716474358974359
       },
       "prevControl": {
-        "x": 5.69532860766721,
-        "y": 4.514948487339205
+        "x": 5.798533735872338,
+        "y": 5.268345923236641
       },
       "nextControl": {
-        "x": 5.895576923076923,
-        "y": 3.2406410256410254
+        "x": 5.998782051282051,
+        "y": 3.9940384615384614
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.306217948717948,
-        "y": 2.5491666666666672
+        "x": 5.596282051282051,
+        "y": 2.931025641025641
       },
       "prevControl": {
-        "x": 6.638653846153845,
-        "y": 2.6110897435897438
+        "x": 6.153589743589744,
+        "y": 3.4057692307692307
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,31 +47,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -179.2461516669292
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 3.0
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -82,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 98.32565033042687
+    "rotation": -54.46232220802567
   },
   "reversed": false,
   "folder": null,
