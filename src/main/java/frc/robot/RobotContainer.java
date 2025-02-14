@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
@@ -51,6 +54,7 @@ public class RobotContainer {
 
 
 
+
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
@@ -71,6 +75,7 @@ public class RobotContainer {
     m_chooser.addOption("Auto2", autoCommand2);
     m_chooser.setDefaultOption("Auto", autoCommand);
     SmartDashboard.putData("Auto Chooser", m_chooser);
+
 
 
 
@@ -107,14 +112,15 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
-
-    new JoystickButton(m_driverController2, XboxController.Button.kB.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_shooter.shooterCommand()));
+            m_robotDrive));          
     new JoystickButton(m_driverController2, XboxController.Button.kX.value)
           .toggleOnTrue(new RunCommand(
             () -> m_shooter.shooterReleaseCommand()));
+    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
+          .toggleOnTrue(new RunCommand(
+          () -> m_shooter.shooterCommand1()));
+
+    
 
 
 

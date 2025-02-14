@@ -79,6 +79,9 @@ public final class Constants {
     // would be to square controller inputs that vary from 0 t0 1
   }
 
+  public static final class ColorSwitch{
+  }
+
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 1;  // originally 3  TUNING
     public static final double kMaxAccelerationMetersPerSecondSquared = 1; // originally 3  TUNING
