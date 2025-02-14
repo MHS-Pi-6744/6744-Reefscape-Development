@@ -58,7 +58,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       .positionConversionFactor(24)
       .velocityConversionFactor(24);
     c_base.closedLoop
-      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
       .outputRange(-1, 1)
       .maxMotion    
