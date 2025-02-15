@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -9,13 +7,12 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Configs;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -35,51 +32,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private double m_setpoint;
 
-  public double k_ElevatorP = ElevatorConstants.kP;
-  public double k_ElevatorI = ElevatorConstants.kI;
-  public double k_ElevatorD = ElevatorConstants.kD;
   
 
   public ElevatorSubsystem() {
     m_shepherd = new SparkMax(ElevatorConstants.kShepherdCanId, SparkMax.MotorType.kBrushless);
     m_sheep = new SparkMax(ElevatorConstants.kSheepCanId, SparkMax.MotorType.kBrushless);
 
-    SparkMaxConfig c_base = new SparkMaxConfig();
-
-    // This config will be applied to both motors
-    c_base
-      .idleMode(IdleMode.kBrake)
-      .smartCurrentLimit(ElevatorConstants.kCurrentLimit);
-    c_base.absoluteEncoder
-      .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
-      .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
-      .inverted(true);
-    c_base.encoder
-      .positionConversionFactor(24)
-      .velocityConversionFactor(24);
-    c_base.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
-      .outputRange(-1, 1)
-      .maxMotion    
-      .maxVelocity(800)
-      .maxAcceleration(6000)
-      .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-      .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
-    c_base.softLimit
-      .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
-      .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
-      .reverseSoftLimitEnabled(true)
-      .forwardSoftLimitEnabled(true);
-    
-    c_sheep = c_base;
-    c_shepherd = c_base;
-
-    // These configs will be appied to the motors individually
-    c_shepherd
-      .inverted(false);
-    c_sheep
-      .inverted(true);
+    c_shepherd = Configs.ElevatorSubsystem.shepherdConfig;
+    c_sheep = Configs.ElevatorSubsystem.sheepConfig;
 
     m_shepherd.configure(c_shepherd, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_sheep.configure(c_sheep, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
