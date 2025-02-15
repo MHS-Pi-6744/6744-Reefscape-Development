@@ -130,11 +130,12 @@ public class ElevatorSubsystem extends SubsystemBase {
   
   @Override
   public void periodic() { // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Calibrator Position", e_cal.getPosition());
+    SmartDashboard.putNumber("Calibrator Velocity", e_cal.getVelocity());
+    SmartDashboard.putNumber("Sheep Position", e_sheep.getPosition());
+    SmartDashboard.putNumber("Sheep Velocity", e_sheep.getVelocity());
     SmartDashboard.putNumber("Shepherd Position", e_shepherd.getPosition());
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
-    SmartDashboard.putNumber("Relative Shepherd Position", r_shepherd.getPosition());
-    SmartDashboard.putNumber("Relative Shepherd Velocity", r_shepherd.getVelocity());
-    SmartDashboard.putNumber("I Accumulator", p_shepherd.getIAccum());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
     moveToSetpoint();
