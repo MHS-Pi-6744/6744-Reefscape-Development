@@ -56,7 +56,7 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static final int kShepherdCanId = 8;
-    public static final int kSheepCanId = -1;
+    public static final int kSheepCanId = 7;
 
     public static final int kStartingPosition = 0;
     public static final int kCurrentLimit = 50;
