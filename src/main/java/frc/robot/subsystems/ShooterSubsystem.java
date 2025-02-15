@@ -119,7 +119,7 @@ public class ShooterSubsystem extends SubsystemBase{
     SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
     SmartDashboard.putNumber("Red", m_colorSensor.getRed());
     SmartDashboard.putNumber("Green", m_colorSensor.getGreen());
-
+    SmartDashboard.putString("Color", m_colorSensor.getColor().toHexString());
 
     }
 }
