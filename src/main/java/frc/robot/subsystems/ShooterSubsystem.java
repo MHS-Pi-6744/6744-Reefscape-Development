@@ -62,14 +62,6 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     //Shooter Commands
-
-    public Command shooterCommand() {
-        return startEnd(
-            () -> m_shooterMotor.set(ShooterConstants.k_shooterSpeed), 
-            () -> m_shooterMotor.set(0));
-            
-    } 
-
     public boolean isWhite(){
         int blue = m_colorSensor.getBlue();
         int red = m_colorSensor.getRed();
@@ -78,13 +70,13 @@ public class ShooterSubsystem extends SubsystemBase{
        
         
 
-        return (red > 200 && green > 200 && blue > 200);
+        return (red > 220 && green > 220 && blue > 150);
       }
     
-    public Command shooterCommand1(){
+    public Command intakeCommand(){
         return new RunCommand(() -> { 
             if (!isWhite()){
-                m_shooterMotor.set(1);
+                m_shooterMotor.set(0.3);
             }else{
                 m_shooterMotor.set(0);
             }
@@ -92,17 +84,16 @@ public class ShooterSubsystem extends SubsystemBase{
     }
            
             
-                
-    public Command slowShooterCommand() {
-        return startEnd(
-            () -> m_shooterMotor.set(ShooterConstants.k_slowShooter), 
-            () -> m_shooterMotor.set(0));
-    }   
-    public Command shooterReleaseCommand() {
+    public Command releaseCommand() {
         return startEnd(
             () -> m_shooterMotor.set(-ShooterConstants.k_shooterSpeed), 
             () -> m_shooterMotor.set(0));
     }    
+
+    public Command stopMotor(){
+        return run(
+        () -> m_shooterMotor.set(0));
+    }
 
     // Shoot coral by turning the shootor wheels a distance in inches ///////where is distance set up?////////
     // Let's figure out how to implement this later, when we know we need it. I think we have to use closed loop controller,

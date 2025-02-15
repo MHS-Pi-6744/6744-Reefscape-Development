@@ -112,12 +112,16 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));          
-    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
-          .toggleOnTrue(new RunCommand(
-            () -> m_shooter.shooterReleaseCommand()));
-    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
-          .toggleOnTrue(m_shooter.shooterCommand1());
+            m_robotDrive));      
+            
+            
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+          .whileTrue(m_shooter.releaseCommand());
+
+
+
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
 
     
 
