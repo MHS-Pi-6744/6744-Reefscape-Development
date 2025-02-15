@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,9 +52,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.updateshuffleboard();
 
     SmartDashboard.putBoolean("Boolean", m_robotContainer.fieldrelative);
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
-
-    
     CommandScheduler.getInstance().run();
   }
 
