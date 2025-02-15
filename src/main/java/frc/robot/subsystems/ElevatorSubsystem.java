@@ -25,11 +25,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   private SparkClosedLoopController p_shepherd;
   private SparkClosedLoopController p_sheep;
 
-  private SparkAbsoluteEncoder e_shepherd;
-  private SparkAbsoluteEncoder e_sheep;
+  private SparkAbsoluteEncoder e_cal;
 
-  private RelativeEncoder r_shepherd;
-  private RelativeEncoder r_sheep;
+  private RelativeEncoder e_shepherd;
+  private RelativeEncoder e_sheep;
 
   private SparkMaxConfig c_shepherd;
   private SparkMaxConfig c_sheep;
@@ -90,14 +89,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     p_shepherd = m_shepherd.getClosedLoopController();
     p_sheep = m_sheep.getClosedLoopController();
 
-    r_shepherd = m_shepherd.getEncoder();
-    r_sheep = m_sheep.getEncoder();
+    e_shepherd = m_shepherd.getEncoder();
+    e_sheep = m_sheep.getEncoder();
 
-    e_shepherd = m_shepherd.getAbsoluteEncoder();
-    e_sheep = m_sheep.getAbsoluteEncoder();
+    e_cal = m_shepherd.getAbsoluteEncoder();
 
-    r_shepherd.setPosition(e_shepherd.getPosition());
-    r_sheep.setPosition(e_sheep.getPosition());
+    e_shepherd.setPosition(e_cal.getPosition());
+    e_sheep.setPosition(e_cal.getPosition());
   }
 
   public boolean atTargetPosition() {
