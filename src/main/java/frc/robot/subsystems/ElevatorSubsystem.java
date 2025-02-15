@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
@@ -39,6 +38,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public double k_ElevatorP = ElevatorConstants.kP;
   public double k_ElevatorI = ElevatorConstants.kI;
   public double k_ElevatorD = ElevatorConstants.kD;
+  public double k_ElevatorF = ElevatorConstants.kF;
   
 
   public ElevatorSubsystem() {
@@ -60,7 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       .velocityConversionFactor(24);
     c_base.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .pid(k_ElevatorP, k_ElevatorI, k_ElevatorD)
+      .pidf(k_ElevatorP, k_ElevatorI, k_ElevatorD, k_ElevatorF)
       .outputRange(-1, 1)
       .maxMotion    
       .maxVelocity(800)
@@ -70,8 +70,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     c_base.softLimit
       .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
       .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
-      .reverseSoftLimitEnabled(true)
-      .forwardSoftLimitEnabled(true);
+      .reverseSoftLimitEnabled(false)
+      .forwardSoftLimitEnabled(false);
     
     c_sheep = c_base;
     c_shepherd = c_base;
