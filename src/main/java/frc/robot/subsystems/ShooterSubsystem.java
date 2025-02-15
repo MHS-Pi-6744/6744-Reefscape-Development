@@ -3,6 +3,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -12,9 +14,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import frc.robot.Constants.ColorSwitch;
 import frc.robot.Constants.ShooterConstants;
-import edu.wpi.first.wpilibj.util.Color;
 
 
 
@@ -22,12 +22,11 @@ import edu.wpi.first.wpilibj.util.Color;
 public class ShooterSubsystem extends SubsystemBase{
 
     // The shooter motor
-    private SparkMax m_shooterMotor = new SparkMax(19, MotorType.kBrushless);
+    private SparkMax m_shooterMotor = new SparkMax(6, MotorType.kBrushless);
   
     // The shooter encoder (set up but not used yet - we may need it later) 
     private RelativeEncoder m_shootEncoder = m_shooterMotor.getEncoder(); 
 
-    private final ShooterSubsystem m_robotDrive = new ShooterSubsystem();
 
 
     private final I2C.Port colorSensorPort = I2C.Port.kOnboard;
@@ -71,29 +70,28 @@ public class ShooterSubsystem extends SubsystemBase{
             
     } 
 
-    public boolean isWhite(boolean isWhiteValue){
+    public boolean isWhite(){
         int blue = m_colorSensor.getBlue();
         int red = m_colorSensor.getRed();
         int green = m_colorSensor.getGreen();
 
-        if (red > 200 && green > 200 && blue > 200){
-            isWhiteValue = true;
-        } else {
-            isWhiteValue = false;
-        }
+       
+        
 
-        return isWhiteValue;       
+        return (red > 200 && green > 200 && blue > 200);
       }
     
     public Command shooterCommand1(){
-        return new Command() {
-            public void initialize(){
-                if (m_robotDrive.isWhite(false)){
-                                    m_shooterMotor.set(1);
-                                }
-                            }
-                        };
-                    } 
+        return new RunCommand(() -> { 
+            if (!isWhite()){
+                m_shooterMotor.set(1);
+            }else{
+                m_shooterMotor.set(0);
+            }
+        }, this);
+    }
+           
+            
                 
     public Command slowShooterCommand() {
         return startEnd(
@@ -127,5 +125,13 @@ public class ShooterSubsystem extends SubsystemBase{
 
     SmartDashboard.putNumber("Shooter Motor P", m_shootEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Motor V", m_shootEncoder.getVelocity());
+
+
+    SmartDashboard.getBoolean("Color Sensor", isWhite());
+    SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
+    SmartDashboard.putNumber("Red", m_colorSensor.getRed());
+    SmartDashboard.putNumber("Green", m_colorSensor.getGreen());
+
+
     }
 }
