@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -79,7 +80,8 @@ public final class Constants {
     // would be to square controller inputs that vary from 0 t0 1
   }
 
-  public static final class ColorSwitch{
+  public static final class ColorSensorConstants {
+    public static final I2C.Port kSensorPort = I2C.Port.kOnboard;
   }
 
   public static final class AutoConstants {
