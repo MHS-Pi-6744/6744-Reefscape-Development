@@ -51,6 +51,7 @@ public class RobotContainer {
 
 
 
+
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
@@ -71,6 +72,7 @@ public class RobotContainer {
     m_chooser.addOption("Auto2", autoCommand2);
     m_chooser.setDefaultOption("Auto", autoCommand);
     SmartDashboard.putData("Auto Chooser", m_chooser);
+
 
 
 
@@ -107,14 +109,18 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
+            m_robotDrive));      
+            
+            
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+          .whileTrue(m_shooter.releaseCommand());
 
-    new JoystickButton(m_driverController2, XboxController.Button.kB.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_shooter.shooterCommand()));
-    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
-          .toggleOnTrue(new RunCommand(
-            () -> m_shooter.shooterReleaseCommand()));
+
+
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+
+    
 
 
 

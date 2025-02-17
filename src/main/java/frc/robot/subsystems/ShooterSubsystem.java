@@ -1,25 +1,37 @@
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.ColorSensorV3;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ColorSensorConstants;
 import frc.robot.Constants.ShooterConstants;
+
 
 
 
 public class ShooterSubsystem extends SubsystemBase{
 
     // The shooter motor
-    private SparkMax m_shooterMotor = new SparkMax(ShooterConstants.Shooter_CANID, MotorType.kBrushless);
+    private SparkMax m_shooterMotor = new SparkMax(6, MotorType.kBrushless);
   
     // The shooter encoder (set up but not used yet - we may need it later) 
     private RelativeEncoder m_shootEncoder = m_shooterMotor.getEncoder(); 
+
+
+    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(ColorSensorConstants.kSensorPort);
+  
+
+
+
 
     // DriveSubsystem constructor - creates & initializes DriveSubsystem object
     public ShooterSubsystem(){
@@ -47,22 +59,38 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     //Shooter Commands
+    public boolean isWhite(){
+        int blue = m_colorSensor.getBlue();
+        int red = m_colorSensor.getRed();
+        int green = m_colorSensor.getGreen();
 
-    public Command shooterCommand() {
-        return startEnd(
-            () -> m_shooterMotor.set(ShooterConstants.k_shooterSpeed), 
-            () -> m_shooterMotor.set(0));
-    }   
-    public Command slowShooterCommand() {
-        return startEnd(
-            () -> m_shooterMotor.set(ShooterConstants.k_slowShooter), 
-            () -> m_shooterMotor.set(0));
-    }   
-    public Command shooterReleaseCommand() {
+       
+        
+
+        return (red > 220 && green > 220 && blue > 150);
+      }
+    
+    public Command intakeCommand(){
+        return new RunCommand(() -> { 
+            if (!isWhite()){
+                m_shooterMotor.set(0.3);
+            }else{
+                m_shooterMotor.set(0);
+            }
+        }, this);
+    }
+           
+            
+    public Command releaseCommand() {
         return startEnd(
             () -> m_shooterMotor.set(-ShooterConstants.k_shooterSpeed), 
             () -> m_shooterMotor.set(0));
     }    
+
+    public Command stopMotor(){
+        return run(
+        () -> m_shooterMotor.set(0));
+    }
 
     // Shoot coral by turning the shootor wheels a distance in inches ///////where is distance set up?////////
     // Let's figure out how to implement this later, when we know we need it. I think we have to use closed loop controller,
@@ -85,5 +113,13 @@ public class ShooterSubsystem extends SubsystemBase{
 
     SmartDashboard.putNumber("Shooter Motor P", m_shootEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Motor V", m_shootEncoder.getVelocity());
+
+
+    SmartDashboard.getBoolean("Color Sensor", isWhite());
+    SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
+    SmartDashboard.putNumber("Red", m_colorSensor.getRed());
+    SmartDashboard.putNumber("Green", m_colorSensor.getGreen());
+    SmartDashboard.putString("Color", m_colorSensor.getColor().toHexString());
+
     }
 }
