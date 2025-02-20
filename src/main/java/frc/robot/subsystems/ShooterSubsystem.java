@@ -21,7 +21,7 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase{
 
     // The shooter motor
-    private SparkMax m_shooterMotor = new SparkMax(6, MotorType.kBrushless);
+    private SparkMax m_shooterMotor = new SparkMax(ShooterConstants.kShooterCanId, MotorType.kBrushless);
   
     // The shooter encoder (set up but not used yet - we may need it later) 
     private RelativeEncoder m_shootEncoder = m_shooterMotor.getEncoder(); 
