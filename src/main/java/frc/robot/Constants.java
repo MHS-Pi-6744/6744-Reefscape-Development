@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -17,8 +18,8 @@ public final class Constants {
   public static final class DriveConstants {
     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.
-    public static final double kMaxSpeedMetersPerSecond = 1; // originally 4.8    TUNING
-    public static final double kMaxAngularSpeed = Math.PI/2 ; // radians per second    originally 2*Pi   TUNING
+    public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
+    public static final double kMaxAngularSpeed = Math.PI/0.4 ; // radians per second    originally 2*Pi   TUNING
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
@@ -85,7 +86,7 @@ public final class Constants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
     // more teeth will result in a robot that drives faster).
-    public static final int kDrivingMotorPinionTeeth = 14;
+    public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
@@ -100,9 +101,14 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kDriverController2Port = 1;
     public static final double kDriveDeadband = 0.05;   //  TUNING
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
+  }
+
+  public static final class ColorSensorConstants {
+    public static final I2C.Port kSensorPort = I2C.Port.kOnboard;
   }
 
   public static final class AutoConstants {
@@ -122,5 +128,13 @@ public final class Constants {
 
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
+  }
+
+  // Coral shooter command constants
+  public static final class ShooterConstants {
+    public static final int kShooterCanId = 6; 
+    public static final double k_shooterSpeed = 0.6; // percent
+    public static final double k_slowShooter = 0.1; // percent
+    //  public static final double k_shootDistance = 4.0; //inches (for later)
   }
 }

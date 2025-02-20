@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,6 +20,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.BuildConstants;
 
 /*
@@ -47,14 +51,16 @@ public class RobotContainer {
 // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
 
 
+
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
+  XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -68,10 +74,16 @@ public class RobotContainer {
     //m_chooser
 
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
-    m_chooser.addOption("Auto", autoCommand);
-    m_chooser.addOption("Auto2", autoCommand2);
-    m_chooser.setDefaultOption("Auto", autoCommand);
+
+    NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
+
+
+
+    m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
+    m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+
     SmartDashboard.putData("Auto Chooser", m_chooser);
+
 
 
 
@@ -139,7 +151,23 @@ public class RobotContainer {
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
             m_elevator
-        ));
+            m_robotDrive));      
+            
+            
+    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
+          .whileTrue(m_shooter.releaseCommand());
+
+
+
+    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+
+    
+
+
+
+  
+
   }
 
   public Command getAutonomousCommand() {
