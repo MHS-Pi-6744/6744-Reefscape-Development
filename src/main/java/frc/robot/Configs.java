@@ -96,7 +96,8 @@ public final class Configs {
         .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
         .inverted(true);
       sheepConfig.encoder
-        .positionConversionFactor(8.36);
+        .positionConversionFactor(24)
+        .velocityConversionFactor(24);
       sheepConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
