@@ -19,6 +19,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.BuildConstants;
 
 /*
@@ -48,14 +49,16 @@ public class RobotContainer {
 
 // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
 
 
+
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
+  XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -78,6 +81,7 @@ public class RobotContainer {
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
 
     SmartDashboard.putData("Auto Chooser", m_chooser);
+
 
 
 
@@ -114,9 +118,22 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kL1.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
+            m_robotDrive));      
+            
+            
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+          .whileTrue(m_shooter.releaseCommand());
 
 
+
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+
+    
+
+
+
+  
 
   }
 
