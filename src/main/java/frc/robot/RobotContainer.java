@@ -8,10 +8,11 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -49,6 +50,7 @@ public class RobotContainer {
 
 // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
@@ -115,18 +117,49 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kL1.value)
+    new JoystickButton(m_driverController, XboxController.Axis.kRightTrigger.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
+            m_robotDrive
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
+            m_elevator
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
+            m_elevator
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kB.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
+            m_elevator
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
+            m_elevator
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kY.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
+            m_elevator
+        ));
+    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
+            m_elevator
             m_robotDrive));      
             
             
-    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
           .whileTrue(m_shooter.releaseCommand());
 
 
 
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
           .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
 
     

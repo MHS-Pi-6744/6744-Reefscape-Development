@@ -1,9 +1,11 @@
 package frc.robot;
 
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ModuleConstants;
 
 public final class Configs {
@@ -52,5 +54,64 @@ public final class Configs {
                     .positionWrappingEnabled(true)
                     .positionWrappingInputRange(0, turningFactor);
         }
+    }
+    public static final class ElevatorSubsystem {
+      public static final SparkMaxConfig shepherdConfig = new SparkMaxConfig();
+      public static final SparkMaxConfig sheepConfig = new SparkMaxConfig();
+      
+      static {
+      shepherdConfig
+        .idleMode(IdleMode.kBrake)
+        .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
+        .inverted(false);
+      shepherdConfig.absoluteEncoder
+        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
+        .inverted(true);
+      shepherdConfig.encoder
+        .positionConversionFactor(24)
+        .velocityConversionFactor(24);
+      shepherdConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
+        .outputRange(-1, 1)
+        .maxMotion    
+        .maxVelocity(800)
+        .maxAcceleration(6000)
+        .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+        .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
+      shepherdConfig.softLimit
+        .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
+        .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
+        .reverseSoftLimitEnabled(true)
+        .forwardSoftLimitEnabled(true);
+      
+      sheepConfig
+        .idleMode(IdleMode.kBrake)
+        .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
+        .inverted(true)
+        .follow(ElevatorConstants.kShepherdCanId, true);
+      sheepConfig.absoluteEncoder
+        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
+        .inverted(true);
+      sheepConfig.encoder
+        .positionConversionFactor(24)
+        .velocityConversionFactor(24);
+      sheepConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
+        .outputRange(-1, 1)
+        .maxMotion    
+        .maxVelocity(800)
+        .maxAcceleration(6000)
+        .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+        .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
+      sheepConfig.softLimit
+        .forwardSoftLimit(ElevatorConstants.kFwdSoftLimit)
+        .reverseSoftLimit(ElevatorConstants.kRevSoftLimit)
+        .reverseSoftLimitEnabled(true)
+        .forwardSoftLimitEnabled(true);
+      }
     }
 }
