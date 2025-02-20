@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
@@ -17,6 +20,7 @@ import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+//import frc.robot.BuildConstants;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -68,9 +72,14 @@ public class RobotContainer {
     //m_chooser
 
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
-    m_chooser.addOption("Auto", autoCommand);
-    m_chooser.addOption("Auto2", autoCommand2);
-    m_chooser.setDefaultOption("Auto", autoCommand);
+
+    NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
+
+
+
+    m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
+    m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
 
@@ -133,7 +142,13 @@ public class RobotContainer {
   }
 
 
+    // Print Git Data
 
-
+  public void printGitData() {
+    System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
+    System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
+    System.out.println("Git Date:" + BuildConstants.GIT_DATE);
+    System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+  };
   
 }
