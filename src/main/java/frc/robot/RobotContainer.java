@@ -150,7 +150,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
-            m_elevator
+            m_elevator,
             m_robotDrive));      
             
             
