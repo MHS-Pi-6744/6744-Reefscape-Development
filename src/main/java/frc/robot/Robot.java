@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.updateshuffleboard();
 
-    SmartDashboard.putBoolean("Boolean", m_robotContainer.fieldrelative);
+    SmartDashboard.putBoolean("Field Relative", m_robotContainer.fieldrelative);
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
     CommandScheduler.getInstance().run();
