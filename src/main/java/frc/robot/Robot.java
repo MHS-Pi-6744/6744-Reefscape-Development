@@ -33,6 +33,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
     m_robotContainer = new RobotContainer();
+
+    m_robotContainer.printGitData();
+    
   }
 
   /**
