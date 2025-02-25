@@ -114,6 +114,7 @@ public class ShooterSubsystem extends SubsystemBase{
     SmartDashboard.putNumber("Shooter Motor P", m_shootEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Motor V", m_shootEncoder.getVelocity());
 
+    SmartDashboard.putBoolean("Shooter Full", isWhite());
 
     SmartDashboard.getBoolean("Color Sensor", isWhite());
     SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
