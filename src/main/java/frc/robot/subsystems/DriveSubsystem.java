@@ -173,11 +173,9 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
-    // m_field.setRobotPose(m_odometry.getPoseMeters());
     SmartDashboard.putNumber("Gyro Rate", getTurnRate());
     SmartDashboard.putData("Pigeon Gyro", m_pigeon);
     SmartDashboard.putData("Swerve Drive", m_swerveSendable);
-    // SmartDashboard.putData("Field", m_fieldSendable);
   }
 
   /**
