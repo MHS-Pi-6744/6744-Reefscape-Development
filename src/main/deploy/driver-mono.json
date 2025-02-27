@@ -17,7 +17,7 @@
             "properties": {
               "topic": "/SmartDashboard/Pigeon Gyro",
               "period": 0.06,
-              "counter_clockwise_positive": false
+              "counter_clockwise_positive": true
             }
           },
           {

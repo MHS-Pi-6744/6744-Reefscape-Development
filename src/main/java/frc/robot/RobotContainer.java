@@ -125,7 +125,7 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
-    new JoystickButton(m_driverController2, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
@@ -162,10 +162,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController2, XboxController.Button.kA.value)
           .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
 
-    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
-      .toggleOnTrue(new RunCommand(
-        () -> toggleFieldRelative(),
-        m_robotDrive));
 
     
 
