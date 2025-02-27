@@ -41,6 +41,9 @@ public class RobotContainer {
   public boolean setRelativeCommandTrue(){
     return fieldrelative = true;
   }
+  public boolean toggleFieldRelative(){
+    return !fieldrelative;
+  }
 
   public boolean fieldrelative = true;
 
@@ -153,14 +156,15 @@ public class RobotContainer {
             m_elevator,
             m_robotDrive));      
             
-            
     new JoystickButton(m_driverController2, XboxController.Button.kX.value)
           .whileTrue(m_shooter.releaseCommand());
 
-
-
     new JoystickButton(m_driverController2, XboxController.Button.kA.value)
           .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+
+    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+      .toggleOnTrue(new RunCommand(
+        () -> toggleFieldRelative()));
 
     
 
