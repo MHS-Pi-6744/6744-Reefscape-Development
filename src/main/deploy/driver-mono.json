@@ -17,7 +17,7 @@
             "properties": {
               "topic": "/SmartDashboard/Pigeon Gyro",
               "period": 0.06,
-              "counter_clockwise_positive": true
+              "counter_clockwise_positive": false
             }
           },
           {
@@ -36,7 +36,7 @@
           },
           {
             "title": "Elevator",
-            "x": 768.0,
+            "x": 1024.0,
             "y": 0.0,
             "width": 128.0,
             "height": 256.0,
@@ -57,7 +57,7 @@
             "x": 0.0,
             "y": 256.0,
             "width": 256.0,
-            "height": 256.0,
+            "height": 128.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/SmartDashboard/Field Relative",
@@ -71,7 +71,7 @@
           },
           {
             "title": "At Target",
-            "x": 768.0,
+            "x": 1024.0,
             "y": 256.0,
             "width": 128.0,
             "height": 128.0,
@@ -88,7 +88,7 @@
           },
           {
             "title": "Match Time",
-            "x": 896.0,
+            "x": 1152.0,
             "y": 128.0,
             "width": 384.0,
             "height": 256.0,
@@ -104,7 +104,7 @@
           },
           {
             "title": "FMSInfo",
-            "x": 896.0,
+            "x": 1152.0,
             "y": 0.0,
             "width": 384.0,
             "height": 128.0,
