@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ElevatorConstants;
@@ -35,11 +36,14 @@ public class RobotContainer {
     SmartDashboard.updateValues();
   }
 
-  public boolean setRelativeCommandFalse(){
-    return fieldrelative = false;
+  public void setRelativeCommandFalse(){
+    fieldrelative = false;
   }
-  public boolean setRelativeCommandTrue(){
-    return fieldrelative = true;
+  public void setRelativeCommandTrue(){
+    fieldrelative = true;
+  }
+  public void toggleFieldRelative(){
+    fieldrelative = !fieldrelative;
   }
 
   public boolean fieldrelative = true;
@@ -122,52 +126,48 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kLeftBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kA.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
             m_elevator
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kB.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kB.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
             m_elevator
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kX.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
             m_elevator
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kY.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kY.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
             m_elevator
         ));
-    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+    new JoystickButton(m_driverController2, XboxController.Button.kRightBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
             m_elevator,
             m_robotDrive));      
             
-            
     new JoystickButton(m_driverController2, XboxController.Button.kX.value)
-          .whileTrue(m_shooter.releaseCommand());
-
-
+      .whileTrue(m_shooter.releaseCommand());
 
     new JoystickButton(m_driverController2, XboxController.Button.kA.value)
-          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
-
+      .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
     
-
-
-
-  
-
+    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+      .whileFalse(new RunCommand(
+        () -> setRelativeCommandTrue()))
+      .whileTrue(new RunCommand(
+        () -> setRelativeCommandFalse()));
   }
 
   public Command getAutonomousCommand() {
