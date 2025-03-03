@@ -19,7 +19,7 @@ public final class Constants {
     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.
     public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
-    public static final double kMaxAngularSpeed = Math.PI/0.4 ; // radians per second    originally 2*Pi   TUNING
+    public static final double kMaxAngularSpeed = 1.5*Math.PI ; // radians per second    originally 2*Pi   TUNING
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
