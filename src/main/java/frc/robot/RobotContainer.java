@@ -175,13 +175,12 @@ public class RobotContainer {
   }
 
 
-    // Print Git Data
-
-  public void printGitData() {
-    System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
-    System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
-    System.out.println("Git Date:" + BuildConstants.GIT_DATE);
-    System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
-  };
+    // Print Git Data (maybe we will try this later)
+    //public void printGitData() {
+    //  System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
+    //  System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
+    //  System.out.println("Git Date:" + BuildConstants.GIT_DATE);
+    //  System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+    //};
   
 }
