@@ -104,13 +104,13 @@ tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
 
-// Generate the Git data file
-project.compileJava.dependsOn(createVersionFile)
-gversion {
-  srcDir       = "src/main/java/"
-  classPackage = "frc.robot"
-  className    = "BuildConstants"
-  dateFormat   = "yyyy-MM-dd h:mm a"
-  timeZone     = "America/Chicago" // Use preferred time zone
-  indent       = "  "
-}
+// Generate the Git data file - maybe we'll try this later
+// project.compileJava.dependsOn(createVersionFile)
+// gversion {
+//   srcDir       = "src/main/java/"
+//   classPackage = "frc.robot"
+//   className    = "BuildConstants"
+//  dateFormat   = "yyyy-MM-dd h:mm a"
+//  timeZone     = "America/Chicago" // Use preferred time zone
+//  indent       = "  "
+// }
