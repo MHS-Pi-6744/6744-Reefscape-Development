@@ -61,14 +61,15 @@ public final class Configs {
       
       static {
       shepherdConfig
-        .idleMode(IdleMode.kCoast)
+        .idleMode(IdleMode.kBrake)
         .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
         .inverted(false);
       shepherdConfig.absoluteEncoder
         .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
         .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
         .inverted(false)
-        .zeroOffset(0.4);
+        .zeroOffset(0.420)
+        .zeroCentered(true);
       shepherdConfig.encoder
         .positionConversionFactor(24)
         .velocityConversionFactor(24);
@@ -78,7 +79,7 @@ public final class Configs {
         .outputRange(-1, 1)
         .maxMotion    
         .maxVelocity(800)
-        .maxAcceleration(6000)
+        .maxAcceleration(600)
         .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
         .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
       shepherdConfig.softLimit
@@ -88,7 +89,7 @@ public final class Configs {
         .forwardSoftLimitEnabled(true);
       
       sheepConfig
-        .idleMode(IdleMode.kCoast)
+        .idleMode(IdleMode.kBrake)
         .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
         .inverted(true)
         .follow(ElevatorConstants.kShepherdCanId, true);
@@ -101,7 +102,7 @@ public final class Configs {
         .outputRange(-1, 1)
         .maxMotion    
         .maxVelocity(800)
-        .maxAcceleration(6000)
+        .maxAcceleration(600)
         .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
         .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
       sheepConfig.softLimit
