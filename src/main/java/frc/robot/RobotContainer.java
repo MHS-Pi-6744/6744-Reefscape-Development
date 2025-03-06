@@ -135,12 +135,6 @@ public class RobotContainer {
           () -> setRelativeCommandFalse()))
         .whileTrue(new RunCommand(
           () -> setRelativeCommandTrue()));      
-    // Left trigger triggers release command to shoot
-    new JoystickButton(m_driverController, XboxController.Axis.kLeftTrigger.value)
-          .whileTrue(m_shooter.releaseCommand());
-    // Left bumper intakes coral
-    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
-          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
 
   //Copilot controller - mdriverController2
     // Left bumper elevator stage Load
@@ -179,6 +173,12 @@ public class RobotContainer {
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
             m_elevator,
             m_robotDrive));      
+    // Right trigger triggers release command to shoot
+    new JoystickButton(m_driverController2, XboxController.Axis.kRightTrigger.value)
+          .whileTrue(m_shooter.releaseCommand());
+    // Left trigger intakes coral
+    new JoystickButton(m_driverController, XboxController.Axis.kLeftTrigger.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
             
   }
 
