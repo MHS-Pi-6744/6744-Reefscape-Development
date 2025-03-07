@@ -62,8 +62,13 @@ public final class Constants {
     public static final int kStartingPosition = 0;
     public static final int kCurrentLimit = 50;
 
+    public static final double kZeroOffest = 0.420;
+
     public static final int kPositionConversionFactor = 1;
     public static final int kVelocityConversionFactor = 1;
+
+    public static final int kMaxVelocity = 800;
+    public static final int kMaxAcceleration = 6000;
     
     public static final double kP = 0.07000000;
     public static final double kI = 0.00000000;

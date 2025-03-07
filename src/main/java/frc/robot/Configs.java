@@ -65,21 +65,19 @@ public final class Configs {
         .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
         .inverted(false);
       shepherdConfig.absoluteEncoder
-        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
-        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor)
         .inverted(false)
-        .zeroOffset(0.420)
+        .zeroOffset(ElevatorConstants.kZeroOffest)
         .zeroCentered(true);
       shepherdConfig.encoder
-        .positionConversionFactor(24)
-        .velocityConversionFactor(24);
+        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
       shepherdConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
         .outputRange(-1, 1)
         .maxMotion    
-        .maxVelocity(800)
-        .maxAcceleration(600)
+        .maxVelocity(ElevatorConstants.kMaxVelocity)
+        .maxAcceleration(ElevatorConstants.kMaxAcceleration)
         .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
         .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
       shepherdConfig.softLimit
@@ -94,15 +92,15 @@ public final class Configs {
         .inverted(true)
         .follow(ElevatorConstants.kShepherdCanId, true);
       sheepConfig.encoder
-        .positionConversionFactor(24)
-        .velocityConversionFactor(24);
+        .positionConversionFactor(ElevatorConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ElevatorConstants.kVelocityConversionFactor);
       sheepConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD)
         .outputRange(-1, 1)
         .maxMotion    
-        .maxVelocity(800)
-        .maxAcceleration(600)
+        .maxVelocity(ElevatorConstants.kMaxVelocity)
+        .maxAcceleration(ElevatorConstants.kMaxAcceleration)
         .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
         .allowedClosedLoopError(ElevatorConstants.kPositionTolerance);
       sheepConfig.softLimit
