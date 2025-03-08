@@ -65,27 +65,34 @@ public final class Constants {
     public static final double kZeroOffest = 0.420;
 
     public static final int kPositionConversionFactor = 1;
-    public static final int kVelocityConversionFactor = 1;
+    public static final double kVelocityConversionFactor = 0.016666666666666666;
 
-    public static final int kMaxVelocity = 800;
-    public static final int kMaxAcceleration = 6000;
+    // IMPORTANT:
+    // y=0.37037x+19.5\left\{0<\ x<27\right\}
+    // y=0.6842x+11.0265\left\{27<x<65\right\}
+    // is the approximate position curve for the elevator
+    // where x is in Degrees of PCF1 and y is in Inches
+    // Measured from the top of the shooter
+
+    public static final double kMaxVelocity = 24;
+    public static final double kMaxAcceleration = 7.5;
     
-    public static final double kP = 0.07000000;
+    public static final double kP = 0.50000000;
     public static final double kI = 0.00000000;
     public static final double kD = 0.00000000;
     public static final double kF = 0.00000000;
     
-    public static final double kFwdSoftLimit = 1500;
+    public static final double kFwdSoftLimit = 60;
     public static final double kRevSoftLimit = -3600;
 
     public static final double kPositionTolerance = 1.0;
 
     public static final double kStageLoad = 0;
-    public static final double kStageL1 = 180;
-    public static final double kStageL2 = 360;
-    public static final double kStageL3 = 180*3;
-    public static final double kStageL4 = 180*4;
-    public static final double kStageAlgae = 180*5;
+    public static final double kStageL1 = 65/6;
+    public static final double kStageL2 = 65/5;
+    public static final double kStageL3 = 65/4;
+    public static final double kStageL4 = 65/3;
+    public static final double kStageAlgae = 65/2;
   }
 
   public static final class ModuleConstants {
