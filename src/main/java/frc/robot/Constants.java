@@ -56,6 +56,9 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
+    // NEVER EVER CHANGE THIS CONSTANT EVER OR I'M GONNA MURDER YOU WITH HAMMERS
+    public static final double kHolyRatio = 24.625/66.25;
+
     public static final int kShepherdCanId = 7;
     public static final int kSheepCanId = 8;
 
@@ -64,8 +67,8 @@ public final class Constants {
 
     public static final double kZeroOffest = 0.420;
 
-    public static final int kPositionConversionFactor = 1;
-    public static final double kVelocityConversionFactor = 0.016666666666666666;
+    public static final double kPositionConversionFactor = kHolyRatio;
+    public static final double kVelocityConversionFactor = kHolyRatio/60;
 
     // IMPORTANT:
     // y=0.37037x+19.5\left\{0<\ x<27\right\}
@@ -74,7 +77,7 @@ public final class Constants {
     // where x is in Degrees of PCF1 and y is in Inches
     // Measured from the top of the shooter
 
-    public static final double kMaxVelocity = 24;
+    public static final double kMaxVelocity = 6;
     public static final double kMaxAcceleration = 7.5;
     
     public static final double kP = 0.50000000;
@@ -82,7 +85,7 @@ public final class Constants {
     public static final double kD = 0.00000000;
     public static final double kF = 0.00000000;
     
-    public static final double kFwdSoftLimit = 60;
+    public static final double kFwdSoftLimit = 20;
     public static final double kRevSoftLimit = -3600;
 
     public static final double kPositionTolerance = 1.0;
