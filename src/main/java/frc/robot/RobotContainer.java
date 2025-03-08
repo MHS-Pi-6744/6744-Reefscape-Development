@@ -132,9 +132,9 @@ public class RobotContainer {
     // Right bumper controls field reletive - button relesed set to robot relative for swerve testing
     new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
         .whileFalse(new RunCommand(
-          () -> setRelativeCommandFalse()))
+          () -> setRelativeCommandTrue()))
         .whileTrue(new RunCommand(
-          () -> setRelativeCommandTrue()));      
+          () -> setRelativeCommandFalse()));      
 
   //Copilot controller - mdriverController2
     // Left bumper elevator stage Load
