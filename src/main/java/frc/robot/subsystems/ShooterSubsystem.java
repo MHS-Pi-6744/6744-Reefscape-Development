@@ -67,12 +67,12 @@ public class ShooterSubsystem extends SubsystemBase{
        
         
 
-        return (red > 220 && green > 220 && blue > 150);
+        return (red > 7800 && green > 14600 && blue > 7800);
       }
     
     public Command intakeCommand(){
         return new RunCommand(() -> { 
-            if (!isWhite()){
+            if (isWhite()){
                 m_shooterMotor.set(0.3);
             }else{
                 m_shooterMotor.set(0);
