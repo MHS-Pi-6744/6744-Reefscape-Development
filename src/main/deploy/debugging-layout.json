@@ -480,7 +480,7 @@
           },
           {
             "title": "Green",
-            "x": 128.0,
+            "x": 384.0,
             "y": 0.0,
             "width": 128.0,
             "height": 256.0,
@@ -498,7 +498,7 @@
           },
           {
             "title": "Blue",
-            "x": 256.0,
+            "x": 768.0,
             "y": 0.0,
             "width": 128.0,
             "height": 256.0,
@@ -516,10 +516,10 @@
           },
           {
             "title": "Color",
-            "x": 384.0,
+            "x": 1152.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 128.0,
+            "height": 256.0,
             "type": "Single Color View",
             "properties": {
               "topic": "/SmartDashboard/Color",
@@ -529,8 +529,8 @@
           },
           {
             "title": "Color",
-            "x": 384.0,
-            "y": 128.0,
+            "x": 1152.0,
+            "y": 256.0,
             "width": 256.0,
             "height": 128.0,
             "type": "Text Display",
@@ -557,7 +557,7 @@
           },
           {
             "title": "Green",
-            "x": 128.0,
+            "x": 384.0,
             "y": 256.0,
             "width": 128.0,
             "height": 128.0,
@@ -571,7 +571,7 @@
           },
           {
             "title": "Blue",
-            "x": 256.0,
+            "x": 768.0,
             "y": 256.0,
             "width": 128.0,
             "height": 128.0,
@@ -581,6 +581,60 @@
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
+            }
+          },
+          {
+            "title": "Red",
+            "x": 128.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/Red",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "min_value": 0.0,
+              "max_value": 100000.0,
+              "color": 4294901760,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Green",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/Green",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "min_value": 0.0,
+              "max_value": 100000.0,
+              "color": 4278255360,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Blue",
+            "x": 896.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/SmartDashboard/Blue",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "min_value": 0.0,
+              "max_value": 100000.0,
+              "color": 4278190335,
+              "line_width": 2.0
             }
           }
         ]
@@ -622,8 +676,8 @@
               "data_type": "double",
               "start_angle": -140.0,
               "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
+              "min_value": -150.0,
+              "max_value": 150.0,
               "number_of_labels": 8,
               "wrap_value": false,
               "show_pointer": true,
@@ -642,7 +696,7 @@
               "period": 0.06,
               "data_type": "double",
               "min_value": 0.0,
-              "max_value": 1560.0,
+              "max_value": 24.0,
               "divisions": 5,
               "inverted": false,
               "orientation": "vertical"
@@ -661,8 +715,8 @@
               "data_type": "double",
               "start_angle": -140.0,
               "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
+              "min_value": -150.0,
+              "max_value": 150.0,
               "number_of_labels": 8,
               "wrap_value": false,
               "show_pointer": true,
@@ -681,7 +735,7 @@
               "period": 0.06,
               "data_type": "double",
               "min_value": 0.0,
-              "max_value": 1560.0,
+              "max_value": 24.0,
               "divisions": 5,
               "inverted": false,
               "orientation": "vertical"
@@ -700,8 +754,8 @@
               "data_type": "double",
               "start_angle": -140.0,
               "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
+              "min_value": -150.0,
+              "max_value": 150.0,
               "number_of_labels": 8,
               "wrap_value": false,
               "show_pointer": true,
