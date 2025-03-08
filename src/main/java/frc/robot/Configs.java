@@ -61,7 +61,7 @@ public final class Configs {
       
       static {
       shepherdConfig
-        .idleMode(IdleMode.kCoast)
+        .idleMode(ElevatorConstants.kIdleMode)
         .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
         .inverted(false);
       shepherdConfig.absoluteEncoder
@@ -87,7 +87,7 @@ public final class Configs {
         .forwardSoftLimitEnabled(true);
       
       sheepConfig
-        .idleMode(IdleMode.kCoast)
+        .idleMode(ElevatorConstants.kIdleMode)
         .smartCurrentLimit(ElevatorConstants.kCurrentLimit)
         .inverted(true)
         .follow(ElevatorConstants.kShepherdCanId, true);

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -56,7 +58,11 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    // NEVER EVER CHANGE THIS CONSTANT EVER OR I'M GONNA MURDER YOU WITH HAMMERS
+    /** The Holy Ratio is the ratio that converts the internal rotation count of
+     * the elevator motor to the position of the bottom of the elevator in inches
+     * @apiNote The holy ratio is {@value}
+     * @apiNote NEVER EVER CHANGE THIS CONSTANT EVER OR I'M GONNA MURDER YOU WITH HAMMERS 
+     */
     public static final double kHolyRatio = 24.625/66.25;
 
     public static final int kShepherdCanId = 7;
@@ -70,7 +76,14 @@ public final class Constants {
     public static final double kPositionConversionFactor = kHolyRatio;
     public static final double kVelocityConversionFactor = kHolyRatio/60;
 
-    // IMPORTANT:
+    /** Sets the Idle mode of the motors.
+     * @apiNote This should remain as {@link IdleMode#kBrake}
+     * unless you want to manually rotate the motors
+     */
+    public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+    // Deprecated, but still nice:
+    // In Desmos,
     // y=0.37037x+19.5\left\{0<\ x<27\right\}
     // y=0.6842x+11.0265\left\{27<x<65\right\}
     // is the approximate position curve for the elevator
@@ -79,29 +92,36 @@ public final class Constants {
 
     public static final double kMaxVelocity = 6;
     public static final double kMaxAcceleration = 7.5;
-    
+
     public static final double kP = 0.50000000;
     public static final double kI = 0.00000000;
     public static final double kD = 0.00000000;
-    public static final double kF = 0.00000000;
     
-    public static final double kFwdSoftLimit = 20;
+    /** The soft limit for the elevator going forward.
+     * @apiNote The soft limits should NEVER go above 24
+     */
+    public static final double kFwdSoftLimit = 24;
     public static final double kRevSoftLimit = -3600;
 
-    public static final double kPositionTolerance = 1.0;
+    /** The allowed tolerance for the elevator
+     * @apiNote This value is in inches
+     * @apiNote This really shouldn't ever go above an inch.
+     */
+    public static final double kPositionTolerance = 0.75;
 
     public static final double kStageLoad = 0;
-    public static final double kStageL1 = 65/6;
-    public static final double kStageL2 = 65/5;
-    public static final double kStageL3 = 65/4;
-    public static final double kStageL4 = 65/3;
-    public static final double kStageAlgae = 65/2;
+    public static final double kStageL1 = 24/6;
+    public static final double kStageL2 = 24/5;
+    public static final double kStageL3 = 24/4;
+    public static final double kStageL4 = 24/3;
+    public static final double kStageAlgae = 24/2;
   }
 
   public static final class ModuleConstants {
-    // The MAXSwerve module can be configured with one of three pinion gears: 12T,
-    // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
-    // more teeth will result in a robot that drives faster).
+    /** The MAXSwerve module can be configured with one of three pinion gears: 12T,
+    * 13T, or 14T. This changes the drive speed of the module (a pinion gear with
+    * more teeth will result in a robot that drives faster).
+    */
     public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
