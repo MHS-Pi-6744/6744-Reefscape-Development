@@ -8,7 +8,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ElevatorConstants;
@@ -42,11 +42,11 @@ public class RobotContainer {
   public void setRelativeCommandTrue(){
     fieldrelative = true;
   }
-  public void toggleFieldRelative(){
+  public void toggleFieldRelative(){ // is this unused?
     fieldrelative = !fieldrelative;
-  }
+  }                          
 
-  public boolean fieldrelative = true;
+  public boolean fieldrelative = false;
 
 
 
@@ -121,53 +121,65 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+
+  // Driver controller - mdriverController
+    // Right trigger sets swerve in X configuration
     new JoystickButton(m_driverController, XboxController.Axis.kRightTrigger.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
+    // Right bumper controls field reletive - button relesed set to robot relative for swerve testing
+    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+        .whileFalse(new RunCommand(
+          () -> setRelativeCommandTrue()))
+        .whileTrue(new RunCommand(
+          () -> setRelativeCommandFalse()));      
+
+  //Copilot controller - mdriverController2
+    // Left bumper elevator stage Load
     new JoystickButton(m_driverController2, XboxController.Button.kLeftBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
+    // A button elevator stage L1
     new JoystickButton(m_driverController2, XboxController.Button.kA.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
             m_elevator
         ));
+    // B button elevator stage L2
     new JoystickButton(m_driverController2, XboxController.Button.kB.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
             m_elevator
         ));
+    // X button elevator stage L3
     new JoystickButton(m_driverController2, XboxController.Button.kX.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
             m_elevator
         ));
+    // Y button elevator stage L4
     new JoystickButton(m_driverController2, XboxController.Button.kY.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
             m_elevator
         ));
+    //  Right bumber elevator stage Algae
     new JoystickButton(m_driverController2, XboxController.Button.kRightBumper.value)
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
             m_elevator,
             m_robotDrive));      
+    // Right trigger triggers release command to shoot
+    new JoystickButton(m_driverController2, XboxController.Axis.kRightTrigger.value)
+          .whileTrue(m_shooter.releaseCommand());
+    // Left trigger intakes coral
+    new JoystickButton(m_driverController, XboxController.Axis.kLeftTrigger.value)
+          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
             
-    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
-      .whileTrue(m_shooter.releaseCommand());
-
-    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
-      .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
-    
-    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
-      .whileFalse(new RunCommand(
-        () -> setRelativeCommandTrue()))
-      .whileTrue(new RunCommand(
-        () -> setRelativeCommandFalse()));
   }
 
   public Command getAutonomousCommand() {
