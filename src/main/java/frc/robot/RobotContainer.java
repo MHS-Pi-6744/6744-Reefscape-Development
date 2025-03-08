@@ -109,6 +109,12 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 fieldrelative),
             m_robotDrive));
+    m_elevator.setDefaultCommand(
+      new RunCommand(
+        () -> m_elevator.doNothing(), 
+        m_elevator
+      )
+    );
   }
 
   /**
