@@ -80,7 +80,7 @@ public final class Constants {
      * @apiNote This should remain as {@link IdleMode#kBrake}
      * unless you want to manually rotate the motors
      */
-    public static final IdleMode kIdleMode = IdleMode.kCoast;
+    public static final IdleMode kIdleMode = IdleMode.kBrake;
 
     // Deprecated, but still nice:
     // In Desmos,
@@ -90,18 +90,21 @@ public final class Constants {
     // where x is in Degrees of PCF1 and y is in Inches
     // Measured from the top of the shooter
 
-    public static final double kMaxVelocity = 6;
-    public static final double kMaxAcceleration = 7.5;
+    public static final double kMaxVelocity = 6f;
+    public static final double kMaxAcceleration = 7f;
 
     public static final double kP = 0.50000000;
     public static final double kI = 0.00000000;
     public static final double kD = 0.00000000;
     
     /** The soft limit for the elevator going forward.
-     * @apiNote The soft limits should NEVER go above 24
+     * @apiNote This soft limit should NEVER go above 24
      */
     public static final double kFwdSoftLimit = 24;
-    public static final double kRevSoftLimit = -3600;
+    /** The soft limit for the elevator going backward.
+     * @apiNote This soft limit should NEVER go below 1
+     */
+    public static final double kRevSoftLimit = 1;
 
     /** The allowed tolerance for the elevator
      * @apiNote This value is in inches
@@ -109,12 +112,12 @@ public final class Constants {
      */
     public static final double kPositionTolerance = 0.75;
 
-    public static final double kStageLoad = 0;
-    public static final double kStageL1 = 24/6;
-    public static final double kStageL2 = 24/5;
-    public static final double kStageL3 = 24/4;
-    public static final double kStageL4 = 24/3;
-    public static final double kStageAlgae = 24/2;
+    public static final double kStageLoad = 24/2f;
+    public static final double kStageL1 = 24/6f;
+    public static final double kStageL2 = 24/5.0;
+    public static final double kStageL3 = 24/4f;
+    public static final double kStageL4 = 24/3f;
+    public static final double kStageAlgae = 24/2f;
   }
 
   public static final class ModuleConstants {

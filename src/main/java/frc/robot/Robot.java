@@ -54,6 +54,8 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.updateshuffleboard();
 
+    SmartDashboard.putData("Controller1", m_robotContainer.m_driverControllerSendable);
+    SmartDashboard.putData("Controller2", m_robotContainer.m_driverController2Sendable);
     SmartDashboard.putBoolean("Field Relative", m_robotContainer.fieldrelative);
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
