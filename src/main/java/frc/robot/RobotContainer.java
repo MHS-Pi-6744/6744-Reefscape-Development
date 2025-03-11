@@ -8,6 +8,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -65,6 +67,18 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
+  Sendable m_driverControllerSendable = new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        m_driverController.initSendable(builder);
+    };
+  };
+  Sendable m_driverController2Sendable = new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        m_driverController2.initSendable(builder);
+    };
+  }; 
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -80,8 +94,6 @@ public class RobotContainer {
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
     NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
-
-
 
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
@@ -109,6 +121,12 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 fieldrelative),
             m_robotDrive));
+    m_elevator.setDefaultCommand(
+      new RunCommand(
+        () -> m_elevator.doNothing(), 
+        m_elevator
+      )
+    );
   }
 
   /**

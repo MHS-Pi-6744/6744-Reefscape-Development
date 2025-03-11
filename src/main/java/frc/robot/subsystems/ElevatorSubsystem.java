@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 
+
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -68,10 +69,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void setTargetPosition(double setpoint) {
     m_setpoint = setpoint;
+    moveToSetpoint();
   }
 
   private void moveToSetpoint() {
     p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
+  }
+
+  public void doNothing() {
+    System.out.println("StrongBad Email #86");
   }
 
   public void setArmCoastMode(){
@@ -98,6 +104,5 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
-    moveToSetpoint();
   }
 }
