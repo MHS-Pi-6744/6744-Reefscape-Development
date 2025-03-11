@@ -76,8 +76,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
-  public void doNothing() {
-    System.out.println("StrongBad Email #86");
+  public void stickControl(double stick) {
+    m_shepherd.set(stick);
   }
 
   public void setArmCoastMode(){

@@ -123,7 +123,7 @@ public class RobotContainer {
             m_robotDrive));
     m_elevator.setDefaultCommand(
       new RunCommand(
-        () -> m_elevator.doNothing(), 
+        () -> m_elevator.stickControl(MathUtil.applyDeadband(m_driverController2.getLeftY(), OIConstants.kDriveDeadband)), 
         m_elevator
       )
     );
