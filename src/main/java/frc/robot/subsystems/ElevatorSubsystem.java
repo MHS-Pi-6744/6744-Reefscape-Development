@@ -55,8 +55,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_cal = m_shepherd.getAbsoluteEncoder();
 
-    e_shepherd.setPosition(e_cal.getPosition());
-    e_sheep.setPosition(e_cal.getPosition());
+    e_sheep.setPosition(0);
+    e_shepherd.setPosition(0);
+
+    // e_shepherd.setPosition(e_cal.getPosition());
+    // e_sheep.setPosition(e_cal.getPosition());
   }
 
   public boolean atTargetPosition() {

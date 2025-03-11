@@ -106,8 +106,8 @@ public class ShooterSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
     // This method will be called once per scheduler run
-    m_shooterMotor.getOutputCurrent();
-
+    // m_shooterMotor.getOutputCurrent();
+/*
     SmartDashboard.putNumber("Shooter Motor Output", m_shooterMotor.getAppliedOutput());
     SmartDashboard.putNumber("Shooter Motor Current", m_shooterMotor.getOutputCurrent());
 
@@ -121,6 +121,6 @@ public class ShooterSubsystem extends SubsystemBase{
     SmartDashboard.putNumber("Red", m_colorSensor.getRed());
     SmartDashboard.putNumber("Green", m_colorSensor.getGreen());
     SmartDashboard.putString("Color", m_colorSensor.getColor().toHexString());
-
+*/
     }
 }
