@@ -110,12 +110,14 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 fieldrelative),
             m_robotDrive));
+    /*
     m_elevator.setDefaultCommand(
       new RunCommand(
         () -> m_elevator.stickControl(-MathUtil.applyDeadband(m_driverController2.getLeftY(), OIConstants.kDriveDeadband)), 
         m_elevator
       )
     );
+    */
   }
 
   /**
@@ -144,12 +146,6 @@ public class RobotContainer {
           () -> setRelativeCommandFalse()));      
 
   //Copilot controller - mdriverController2
-    // Left bumper elevator stage Load
-    m_driverController2.leftBumper()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
-            m_elevator
-        ));
     // A button elevator stage L1
     m_driverController2.a()
         .toggleOnTrue(new RunCommand(
@@ -168,10 +164,10 @@ public class RobotContainer {
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
             m_elevator
         ));
-    // Y button elevator stage L4
+    // Left bumper elevator stage Load
     m_driverController2.y()
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
     //  Right bumber elevator stage Algae
@@ -183,7 +179,7 @@ public class RobotContainer {
     // Right trigger triggers release command to shoot
     m_driverController2.rightTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
-    m_driverController2.leftTrigger().onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+    m_driverController2.leftTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
   }
 
