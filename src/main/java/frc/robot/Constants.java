@@ -76,6 +76,7 @@ public final class Constants {
     public static final double kPositionConversionFactor = kHolyRatio;
     public static final double kVelocityConversionFactor = kHolyRatio;
 
+
     /** Sets the Idle mode of the motors.
      * @apiNote This should remain as {@link IdleMode#kBrake}
      * unless you want to manually rotate the motors
