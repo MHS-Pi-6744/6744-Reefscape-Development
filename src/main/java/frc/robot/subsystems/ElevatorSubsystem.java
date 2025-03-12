@@ -55,8 +55,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_cal = m_shepherd.getAbsoluteEncoder();
 
-    e_shepherd.setPosition(e_cal.getPosition());
-    e_sheep.setPosition(e_cal.getPosition());
+    e_sheep.setPosition(0);
+    e_shepherd.setPosition(0);
+
+    // e_shepherd.setPosition(e_cal.getPosition());
+    // e_sheep.setPosition(e_cal.getPosition());
   }
 
   public boolean atTargetPosition() {
@@ -76,8 +79,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     p_shepherd.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
-  public void doNothing() {
-    System.out.println("StrongBad Email #86");
+  public void stickControl(double stick) {
+    m_shepherd.set(stick);
   }
 
   public void setArmCoastMode(){
