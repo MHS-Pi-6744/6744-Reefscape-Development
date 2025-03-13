@@ -86,6 +86,7 @@ public class RobotContainer {
 
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+    m_chooser.addOption("Do Nothing", new Command(){});
 
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
