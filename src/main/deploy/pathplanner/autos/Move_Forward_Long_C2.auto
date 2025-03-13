@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "DR-L2 Path"
+            "pathName": "Move_Forward_Long_C5"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Leo_Auto",
+  "folder": "Move_Forward_Long",
   "choreoAuto": false
 }
