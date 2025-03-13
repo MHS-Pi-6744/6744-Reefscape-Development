@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
@@ -65,20 +66,8 @@ public class RobotContainer {
 
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
-  Sendable m_driverControllerSendable = new Sendable() {
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        m_driverController.initSendable(builder);
-    };
-  };
-  Sendable m_driverController2Sendable = new Sendable() {
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        m_driverController2.initSendable(builder);
-    };
-  }; 
+  CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController2 = new CommandXboxController(OIConstants.kDriverController2Port);
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -121,12 +110,14 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 fieldrelative),
             m_robotDrive));
+    /*
     m_elevator.setDefaultCommand(
       new RunCommand(
         () -> m_elevator.stickControl(-MathUtil.applyDeadband(m_driverController2.getLeftY(), OIConstants.kDriveDeadband)), 
         m_elevator
       )
     );
+    */
   }
 
   /**
@@ -142,61 +133,53 @@ public class RobotContainer {
 
   // Driver controller - mdriverController
     // Right trigger sets swerve in X configuration
-    new JoystickButton(m_driverController, XboxController.Axis.kRightTrigger.value)
+    m_driverController.rightTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
     // Right bumper controls field reletive - button relesed set to robot relative for swerve testing
-    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+    m_driverController.rightBumper()
         .whileFalse(new RunCommand(
           () -> setRelativeCommandTrue()))
         .whileTrue(new RunCommand(
           () -> setRelativeCommandFalse()));      
 
   //Copilot controller - mdriverController2
-    // Left bumper elevator stage Load
-    new JoystickButton(m_driverController2, XboxController.Button.kLeftBumper.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
-            m_elevator
-        ));
     // A button elevator stage L1
-    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
+    m_driverController2.a()
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
             m_elevator
         ));
     // B button elevator stage L2
-    new JoystickButton(m_driverController2, XboxController.Button.kB.value)
+    m_driverController2.b()
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
             m_elevator
         ));
     // X button elevator stage L3
-    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
+    m_driverController2.x()
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
             m_elevator
         ));
-    // Y button elevator stage L4
-    new JoystickButton(m_driverController2, XboxController.Button.kY.value)
+    // Left bumper elevator stage Load
+    m_driverController2.y()
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
     //  Right bumber elevator stage Algae
-    new JoystickButton(m_driverController2, XboxController.Button.kRightBumper.value)
+    m_driverController2.rightBumper()
         .toggleOnTrue(new RunCommand(
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
             m_elevator,
             m_robotDrive));      
     // Right trigger triggers release command to shoot
-    new JoystickButton(m_driverController2, XboxController.Axis.kRightTrigger.value)
-          .whileTrue(m_shooter.releaseCommand());
+    m_driverController2.rightTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
-    new JoystickButton(m_driverController, XboxController.Axis.kLeftTrigger.value)
-          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+    m_driverController2.leftTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
   }
 

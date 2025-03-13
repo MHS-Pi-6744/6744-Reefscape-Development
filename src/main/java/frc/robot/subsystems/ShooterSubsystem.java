@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -90,6 +89,12 @@ public class ShooterSubsystem extends SubsystemBase{
     public Command stopMotor(){
         return run(
         () -> m_shooterMotor.set(0));
+    }
+
+    public Command olIntakeCommand() {
+        return startEnd(
+            () -> m_shooterMotor.set(-ShooterConstants.k_shooterintakeSpeed), 
+            () -> m_shooterMotor.set(0));
     }
 
     // Shoot coral by turning the shootor wheels a distance in inches ///////where is distance set up?////////
