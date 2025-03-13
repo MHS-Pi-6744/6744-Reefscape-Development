@@ -57,7 +57,10 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  public final Command ele_GoL1beta = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
+  public final Command ele_GoLoad = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad), m_elevator);
+  public final Command ele_GoL1 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
+  public final Command ele_GoL2 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2), m_elevator);
+  public final Command ele_GoL3 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3), m_elevator);
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
@@ -81,7 +84,10 @@ public class RobotContainer {
 
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
-    NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
+    NamedCommands.registerCommand("Load", ele_GoLoad);
+    NamedCommands.registerCommand("L1", ele_GoL1);
+    NamedCommands.registerCommand("L2", ele_GoL2);
+    NamedCommands.registerCommand("L3", ele_GoL3);
 
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
@@ -147,32 +153,15 @@ public class RobotContainer {
 
   //Copilot controller - mdriverController2
     // A button elevator stage L1
-    m_driverController2.a()
-        .toggleOnTrue(ele_GoL1beta);
+    m_driverController2.a().toggleOnTrue(ele_GoL1);
     // B button elevator stage L2
-    m_driverController2.b()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
-            m_elevator
-        ));
+    m_driverController2.b().toggleOnTrue(ele_GoL2);
     // X button elevator stage L3
-    m_driverController2.x()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
-            m_elevator
-        ));
+    m_driverController2.x().toggleOnTrue(ele_GoL3);
     // Left bumper elevator stage Load
-    m_driverController2.y()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
-            m_elevator
-        ));
-    //  Right bumper elevator stage Load
-    m_driverController2.rightBumper()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
-            m_elevator,
-            m_robotDrive));      
+    m_driverController2.y().toggleOnTrue(ele_GoLoad);
+    // Right bumper elevator stage Load
+    m_driverController2.rightBumper().toggleOnTrue(ele_GoLoad);
     // Left Bumper
     m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
     // Right trigger triggers release command to shoot
