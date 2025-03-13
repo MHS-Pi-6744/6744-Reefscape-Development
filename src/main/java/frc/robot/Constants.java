@@ -113,10 +113,10 @@ public final class Constants {
      */
     public static final double kPositionTolerance = 0.75;
 
-    public static final double kStageLoad = 6.61;
+    public static final double kStageLoad = 7.86;
     public static final double kStageL1 = 6.61;
     public static final double kStageL2 = 13.15;
-    public static final double kStageL3 = 13.37;
+    public static final double kStageL3 = 21;
     public static final double kStageAlgae = 6.61;
   }
 
