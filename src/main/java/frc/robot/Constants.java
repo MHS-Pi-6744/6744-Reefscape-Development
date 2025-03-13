@@ -115,8 +115,8 @@ public final class Constants {
 
     public static final double kStageLoad = 7.86;
     public static final double kStageL1 = 6.61;
-    public static final double kStageL2 = 13.15;
-    public static final double kStageL3 = 21;
+    public static final double kStageL2 = 13.65;
+    public static final double kStageL3 = 22;
     public static final double kStageAlgae = 6.61;
   }
 
