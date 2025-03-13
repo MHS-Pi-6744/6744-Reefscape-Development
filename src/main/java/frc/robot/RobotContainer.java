@@ -85,6 +85,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
 
     m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
+    m_chooser.addOption("L1_JI_C2", new PathPlannerAuto("L1_JI_C2"));
+    m_chooser.addOption("L1_FE_C5", new PathPlannerAuto(autoCommand));
   
     m_chooser.addOption("Do Nothing", new Command(){});
 
