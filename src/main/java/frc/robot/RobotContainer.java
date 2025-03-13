@@ -84,8 +84,8 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
 
-    m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
-    m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+    m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
+  
     m_chooser.addOption("Do Nothing", new Command(){});
 
     SmartDashboard.putData("Auto Chooser", m_chooser);
