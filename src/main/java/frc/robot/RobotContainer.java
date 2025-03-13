@@ -17,12 +17,14 @@ import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.commands.elevator.RaiseL1;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.BuildConstants;
@@ -59,6 +61,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  public final Command ele_GoL1beta = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
@@ -149,10 +152,7 @@ public class RobotContainer {
   //Copilot controller - mdriverController2
     // A button elevator stage L1
     m_driverController2.a()
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
-            m_elevator
-        ));
+        .toggleOnTrue(ele_GoL1beta);
     // B button elevator stage L2
     m_driverController2.b()
         .toggleOnTrue(new RunCommand(
