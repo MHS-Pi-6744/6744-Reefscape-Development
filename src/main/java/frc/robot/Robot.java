@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -27,7 +31,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
     m_robotContainer = new RobotContainer();
+
+    // m_robotContainer.printGitData();   // maybe we'll try this later
+    
   }
 
   /**
@@ -43,6 +51,12 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
+    m_robotContainer.updateshuffleboard();
+
+    SmartDashboard.putBoolean("Field Relative", m_robotContainer.fieldrelative);
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+
     CommandScheduler.getInstance().run();
   }
 
@@ -57,7 +71,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

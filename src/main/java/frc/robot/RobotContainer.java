@@ -4,26 +4,28 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.ElevatorConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.List;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.auto.AutonomousCommand;
+import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+//import frc.robot.BuildConstants;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -32,18 +34,71 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
+  
+  public void updateshuffleboard(){
+    SmartDashboard.updateValues();
+  }
+
+  public void setRelativeCommandFalse(){
+    fieldrelative = false;
+  }
+  public void setRelativeCommandTrue(){
+    fieldrelative = true;
+  }
+  public void toggleFieldRelative(){ // is this unused?
+    fieldrelative = !fieldrelative;
+  }                          
+
+  public boolean fieldrelative = true;
+
+
+
+
+
+// The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
+  public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
+
+
+
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController2 = new CommandXboxController(OIConstants.kDriverController2Port);
+
+  //m_chooser
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    //m_chooser
+
+    // Shuffleboard.getTab("Autonomous").add(m_chooser);
+
+    NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
+
+    m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
+  
+    m_chooser.addOption("Do Nothing", new Command(){});
+
+    SmartDashboard.putData("Auto Chooser", m_chooser);
+
+
+
+
+
     // Configure the button bindings
     configureButtonBindings();
+      
+
+    
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -54,8 +109,16 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true),
+                fieldrelative),
             m_robotDrive));
+    /*
+    m_elevator.setDefaultCommand(
+      new RunCommand(
+        () -> m_elevator.stickControl(-MathUtil.applyDeadband(m_driverController2.getLeftY(), OIConstants.kDriveDeadband)), 
+        m_elevator
+      )
+    );
+    */
   }
 
   /**
@@ -68,55 +131,72 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+
+  // Driver controller - mdriverController
+    // Right trigger sets swerve in X configuration
+    m_driverController.rightTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
-            m_robotDrive));
+            m_robotDrive
+        ));
+    // Right bumper controls field reletive - button relesed set to robot relative for swerve testing
+    m_driverController.rightBumper()
+        .whileFalse(new RunCommand(
+          () -> setRelativeCommandTrue()))
+        .whileTrue(new RunCommand(
+          () -> setRelativeCommandFalse()));      
+
+  //Copilot controller - mdriverController2
+    // A button elevator stage L1
+    m_driverController2.a()
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
+            m_elevator
+        ));
+    // B button elevator stage L2
+    m_driverController2.b()
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
+            m_elevator
+        ));
+    // X button elevator stage L3
+    m_driverController2.x()
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
+            m_elevator
+        ));
+    // Left bumper elevator stage Load
+    m_driverController2.y()
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
+            m_elevator
+        ));
+    //  Right bumper elevator stage Load
+    m_driverController2.rightBumper()
+        .toggleOnTrue(new RunCommand(
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
+            m_elevator,
+            m_robotDrive));      
+    // Left Bumper
+    m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
+    // Right trigger triggers release command to shoot
+    m_driverController2.leftTrigger().whileTrue(m_shooter.releaseCommand());
+    // Left trigger intakes coral
+    m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
+            
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
-
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
-
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-
-        // Position controllers
-        new PIDController(AutoConstants.kPXController, 0, 0),
-        new PIDController(AutoConstants.kPYController, 0, 0),
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    return m_chooser.getSelected();
   }
+
+
+    // Print Git Data (maybe we will try this later)
+    //public void printGitData() {
+    //  System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
+    //  System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
+    //  System.out.println("Git Date:" + BuildConstants.GIT_DATE);
+    //  System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+    //};
+  
 }
