@@ -171,16 +171,18 @@ public class RobotContainer {
             () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator
         ));
-    //  Right bumber elevator stage Algae
+    //  Right bumper elevator stage Load
     m_driverController2.rightBumper()
         .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
+            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
             m_elevator,
             m_robotDrive));      
+    // Left Bumper
+    m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
     // Right trigger triggers release command to shoot
-    m_driverController2.rightTrigger().whileTrue(m_shooter.releaseCommand());
+    m_driverController2.leftTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
-    m_driverController2.leftTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
+    m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
   }
 
