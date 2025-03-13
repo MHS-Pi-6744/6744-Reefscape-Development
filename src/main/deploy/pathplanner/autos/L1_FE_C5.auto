@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Move_Forward_Long_C3"
+            "pathName": "L1_FE_C5"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Move_Forward_Long",
+  "folder": "L1-comp-auto",
   "choreoAuto": false
 }
