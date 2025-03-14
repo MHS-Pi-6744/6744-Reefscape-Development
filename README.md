@@ -4,7 +4,7 @@ Updated 02/04/25
 This project will develop software to run the Mehlville RC Reefscape robot. The Robot will feature swerve drive and an elevator with a manipulator to take-in and deposit  coral elements. REVrobotics/MAXSwerve-Java-Template provided the starting place for this effort.
 ### Development approach
 The team will code and test all new features and fixes on specific feature branches. The several feature branches will be integrated and tested as a system on an integrate branch.
-### GitHub Best Practices
+### GitHub Best Practices 
 #### Terms:
 - Codebase: all of our code for a robot
 - Git: Source Control Manager, used for collaboration/tracking changes, where many terms in this list come from
