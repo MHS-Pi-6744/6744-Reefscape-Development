@@ -15,6 +15,7 @@ import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -57,10 +58,10 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  public final Command ele_GoLoad = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad), m_elevator);
-  public final Command ele_GoL1 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
-  public final Command ele_GoL2 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2), m_elevator);
-  public final Command ele_GoL3 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3), m_elevator);
+  public final Command ele_GoLoad = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad), m_elevator);
+  public final Command ele_GoL1 = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
+  public final Command ele_GoL2 = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2), m_elevator);
+  public final Command ele_GoL3 = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3), m_elevator);
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
