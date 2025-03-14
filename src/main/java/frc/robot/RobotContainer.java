@@ -93,10 +93,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Reverse", m_shooter.reverseIntakeCommand());
     NamedCommands.registerCommand("Shoot", m_shooter.releaseCommand());
 
-    m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
-  
-    m_chooser.addOption("Do Nothing", new Command(){});
+    m_chooser.addOption("preload_Auto", new PathPlannerAuto("preload_Auto"));
+    m_chooser.addOption("L2_JI_C2", new PathPlannerAuto("L2_JI_C2"));
+    m_chooser.addOption("L2_FE_C5", new PathPlannerAuto("L2_FE_C5"));
 
+    m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
+    m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
 

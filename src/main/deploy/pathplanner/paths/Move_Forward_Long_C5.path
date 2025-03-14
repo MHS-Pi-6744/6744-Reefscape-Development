@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.807755681818182,
-        "y": 3.9601846590981906
+        "x": 7.722307692307692,
+        "y": 1.9505769230769225
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.539422348484847,
-        "y": 3.963076923076923
+        "x": 6.401282051282051,
+        "y": 1.9196153846153847
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.743636363636364,
-        "y": 3.7607528409090905
+        "x": 5.090576923076923,
+        "y": 2.7142948717948716
       },
       "prevControl": {
-        "x": 6.425269522144524,
-        "y": 3.760752840901809
+        "x": 6.112307692307692,
+        "y": 2.033141025641025
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 121.18497465873834
   },
   "reversed": false,
-  "folder": "Leo_Path",
+  "folder": "Move_Forward_Long",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.9509609999007
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

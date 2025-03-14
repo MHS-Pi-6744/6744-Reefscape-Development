@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.807755681818182,
-        "y": 3.9601846590981906
+        "x": 7.742948717948718,
+        "y": 6.1923076923076925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.539422348484847,
-        "y": 3.963076923076923
+        "x": 6.717236518105951,
+        "y": 6.275697695142958
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.743636363636364,
-        "y": 3.7607528409090905
+        "x": 5.3589102564102555,
+        "y": 5.129294871794871
       },
       "prevControl": {
-        "x": 6.425269522144524,
-        "y": 3.760752840901809
+        "x": 6.176701201913993,
+        "y": 5.7972758440569025
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "L1_JI_C2_End1"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 0.5,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -120.4998332334475
   },
   "reversed": false,
-  "folder": "Leo_Path",
+  "folder": "L1-comp-path",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.9509609999007
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
