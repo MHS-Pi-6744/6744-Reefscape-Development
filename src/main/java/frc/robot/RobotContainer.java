@@ -143,7 +143,7 @@ public class RobotContainer {
 
   // Driver controller - mdriverController
     // Right trigger sets swerve in X configuration
-    m_driverController.rightTrigger()
+    m_driverController.leftTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
@@ -169,7 +169,7 @@ public class RobotContainer {
     // Left Bumper
     m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
     // Right trigger triggers release command to shoot
-    m_driverController2.leftTrigger().whileTrue(m_shooter.releaseCommand());
+    m_driverController.rightTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
     m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
