@@ -97,6 +97,8 @@ public class RobotContainer {
 
     // Planned auto for 1 preloaded coral going to Level 2 on Reef H starting in the middle of the field
     m_chooser.addOption("preload_Auto", new PathPlannerAuto("preload_Auto"));
+    m_chooser.addOption("L2_JI_C2", new PathPlannerAuto("L2_JI_C2"));
+    m_chooser.addOption("L2_FE_C5", new PathPlannerAuto("L2_FE_C5"));
 
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
