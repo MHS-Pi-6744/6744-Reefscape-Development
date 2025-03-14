@@ -126,6 +126,18 @@
               "period": 0.06,
               "sort_options": false
             }
+          },
+          {
+            "title": "USB Camera 0",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 512.0,
+            "height": 512.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/USB Camera 0",
+              "period": 0.06
+            }
           }
         ]
       }
