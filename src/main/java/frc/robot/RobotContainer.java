@@ -93,6 +93,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", m_shooter.olIntakeCommand());
     NamedCommands.registerCommand("Reverse", m_shooter.reverseIntakeCommand());
     NamedCommands.registerCommand("Shoot", m_shooter.releaseCommand());
+    NamedCommands.registerCommand("Stop", m_shooter.stopMotor());
+
+    m_chooser.addOption("preload_Auto", new PathPlannerAuto("preload_Auto"));
+    m_chooser.addOption("L2_JI_C2", new PathPlannerAuto("L2_JI_C2"));
+    m_chooser.addOption("L2_FE_C5", new PathPlannerAuto("L2_FE_C5"));
 
 
     // Planned auto for 1 preloaded coral going to Level 2 on Reef H starting in the middle of the field
@@ -103,7 +108,6 @@ public class RobotContainer {
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
     m_chooser.addOption("Do Nothing", new Command(){});
-
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
 
@@ -150,7 +154,7 @@ public class RobotContainer {
 
   // Driver controller - mdriverController
     // Right trigger sets swerve in X configuration
-    m_driverController.rightTrigger()
+    m_driverController.leftTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
@@ -176,7 +180,7 @@ public class RobotContainer {
     // Left Bumper
     m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
     // Right trigger triggers release command to shoot
-    m_driverController2.leftTrigger().whileTrue(m_shooter.releaseCommand());
+    m_driverController.rightTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
     m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
