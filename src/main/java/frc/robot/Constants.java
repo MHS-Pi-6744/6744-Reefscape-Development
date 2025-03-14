@@ -101,7 +101,7 @@ public final class Constants {
     /** The soft limit for the elevator going forward.
      * @apiNote This soft limit should NEVER go above 24
      */
-    public static final double kFwdSoftLimit = 15;
+    public static final double kFwdSoftLimit = 23;
     /** The soft limit for the elevator going backward.
      * @apiNote This soft limit should NEVER go below 1
      */
@@ -113,12 +113,11 @@ public final class Constants {
      */
     public static final double kPositionTolerance = 0.75;
 
-    public static final double kStageLoad = 4;
-    public static final double kStageL1 = 6;
-    public static final double kStageL2 = 8;
-    public static final double kStageL3 = 12;
-    public static final double kStageL4 = 16;
-    public static final double kStageAlgae = 0;
+    public static final double kStageLoad = 7.86;
+    public static final double kStageL1 = 6.61;
+    public static final double kStageL2 = 13.65;
+    public static final double kStageL3 = 22;
+    public static final double kStageAlgae = 6.61;
   }
 
   public static final class ModuleConstants {
@@ -176,5 +175,6 @@ public final class Constants {
     public static final double k_shooterSpeed = 0.6; // percent
     public static final double k_slowShooter = 0.1; // percent
     //  public static final double k_shootDistance = 4.0; //inches (for later)
+    public static final double k_shooterintakeSpeed = 0.3;
   }
 }

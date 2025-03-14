@@ -8,8 +8,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
@@ -26,7 +25,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.BuildConstants;
 
-/*
+/**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
@@ -58,6 +57,10 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  public final Command ele_GoLoad = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad), m_elevator);
+  public final Command ele_GoL1 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
+  public final Command ele_GoL2 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2), m_elevator);
+  public final Command ele_GoL3 = new RunCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3), m_elevator);
   public final AutonomousCommand autoCommand = new AutonomousCommand(m_robotDrive);
   public final AutonomousCommand2 autoCommand2 = new AutonomousCommand2(m_robotDrive);
 
@@ -65,20 +68,8 @@ public class RobotContainer {
 
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_driverController2 = new XboxController(OIConstants.kDriverController2Port);
-  Sendable m_driverControllerSendable = new Sendable() {
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        m_driverController.initSendable(builder);
-    };
-  };
-  Sendable m_driverController2Sendable = new Sendable() {
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        m_driverController2.initSendable(builder);
-    };
-  }; 
+  CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController2 = new CommandXboxController(OIConstants.kDriverController2Port);
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -93,10 +84,18 @@ public class RobotContainer {
 
     // Shuffleboard.getTab("Autonomous").add(m_chooser);
 
-    NamedCommands.registerCommand("AutonomousCommand2", autoCommand2);
+    NamedCommands.registerCommand("Load", ele_GoLoad);
+    NamedCommands.registerCommand("L1", ele_GoL1);
+    NamedCommands.registerCommand("L2", ele_GoL2);
+    NamedCommands.registerCommand("L3", ele_GoL3);
 
-    m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
-    m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
+    NamedCommands.registerCommand("Intake", m_shooter.olIntakeCommand());
+    NamedCommands.registerCommand("Reverse", m_shooter.reverseIntakeCommand());
+    NamedCommands.registerCommand("Shoot", m_shooter.releaseCommand());
+
+    m_chooser.addOption("Move_Forward_Short", new PathPlannerAuto("Move_Forward_Short"));
+  
+    m_chooser.addOption("Do Nothing", new Command(){});
 
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
@@ -121,12 +120,14 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 fieldrelative),
             m_robotDrive));
+    /*
     m_elevator.setDefaultCommand(
       new RunCommand(
         () -> m_elevator.stickControl(-MathUtil.applyDeadband(m_driverController2.getLeftY(), OIConstants.kDriveDeadband)), 
         m_elevator
       )
     );
+    */
   }
 
   /**
@@ -142,61 +143,35 @@ public class RobotContainer {
 
   // Driver controller - mdriverController
     // Right trigger sets swerve in X configuration
-    new JoystickButton(m_driverController, XboxController.Axis.kRightTrigger.value)
+    m_driverController.rightTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
         ));
     // Right bumper controls field reletive - button relesed set to robot relative for swerve testing
-    new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value)
+    m_driverController.rightBumper()
         .whileFalse(new RunCommand(
           () -> setRelativeCommandTrue()))
         .whileTrue(new RunCommand(
           () -> setRelativeCommandFalse()));      
 
   //Copilot controller - mdriverController2
-    // Left bumper elevator stage Load
-    new JoystickButton(m_driverController2, XboxController.Button.kLeftBumper.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad),
-            m_elevator
-        ));
     // A button elevator stage L1
-    new JoystickButton(m_driverController2, XboxController.Button.kA.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1),
-            m_elevator
-        ));
+    m_driverController2.a().toggleOnTrue(ele_GoL1);
     // B button elevator stage L2
-    new JoystickButton(m_driverController2, XboxController.Button.kB.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL2),
-            m_elevator
-        ));
+    m_driverController2.b().toggleOnTrue(ele_GoL2);
     // X button elevator stage L3
-    new JoystickButton(m_driverController2, XboxController.Button.kX.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL3),
-            m_elevator
-        ));
-    // Y button elevator stage L4
-    new JoystickButton(m_driverController2, XboxController.Button.kY.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageL4),
-            m_elevator
-        ));
-    //  Right bumber elevator stage Algae
-    new JoystickButton(m_driverController2, XboxController.Button.kRightBumper.value)
-        .toggleOnTrue(new RunCommand(
-            () -> m_elevator.setTargetPosition(ElevatorConstants.kStageAlgae),
-            m_elevator,
-            m_robotDrive));      
+    m_driverController2.x().toggleOnTrue(ele_GoL3);
+    // Left bumper elevator stage Load
+    m_driverController2.y().toggleOnTrue(ele_GoLoad);
+    // Right bumper elevator stage Load
+    m_driverController2.rightBumper().toggleOnTrue(ele_GoLoad);
+    // Left Bumper
+    m_driverController2.leftBumper().whileTrue(m_shooter.reverseIntakeCommand());
     // Right trigger triggers release command to shoot
-    new JoystickButton(m_driverController2, XboxController.Axis.kRightTrigger.value)
-          .whileTrue(m_shooter.releaseCommand());
+    m_driverController2.leftTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
-    new JoystickButton(m_driverController, XboxController.Axis.kLeftTrigger.value)
-          .onTrue(m_shooter.intakeCommand()).onFalse(m_shooter.stopMotor());
+    m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
             
   }
 

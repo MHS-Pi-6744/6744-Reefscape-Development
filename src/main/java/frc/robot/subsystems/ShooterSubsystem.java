@@ -8,9 +8,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ColorSensorConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -69,27 +67,29 @@ public class ShooterSubsystem extends SubsystemBase{
 
         return (red > 7800 && green > 14600 && blue > 7800);
       }
-    
-    public Command intakeCommand(){
-        return new RunCommand(() -> { 
-            if (isWhite()){
-                m_shooterMotor.set(0.3);
-            }else{
-                m_shooterMotor.set(0);
-            }
-        }, this);
+
+    public Command stopMotor(){
+        return run(
+        () -> m_shooterMotor.set(0));
     }
-           
-            
+    
     public Command releaseCommand() {
         return startEnd(
             () -> m_shooterMotor.set(-ShooterConstants.k_shooterSpeed), 
             () -> m_shooterMotor.set(0));
     }    
 
-    public Command stopMotor(){
-        return run(
-        () -> m_shooterMotor.set(0));
+    public Command olIntakeCommand() {
+        return startEnd(
+            () -> m_shooterMotor.set(-ShooterConstants.k_shooterintakeSpeed), 
+            () -> m_shooterMotor.set(0));
+    }
+
+    public Command reverseIntakeCommand() {
+        return startEnd(
+            () -> m_shooterMotor.set(ShooterConstants.k_shooterintakeSpeed), 
+            () -> m_shooterMotor.set(0));
+
     }
 
     // Shoot coral by turning the shootor wheels a distance in inches ///////where is distance set up?////////
