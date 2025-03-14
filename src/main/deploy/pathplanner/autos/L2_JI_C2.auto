@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Move_Forward_Short"
+                  "pathName": "L1_JI_C2"
                 }
               },
               {
@@ -54,7 +54,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Move_to_Station"
+                  "pathName": "L2_JI_C2_Station"
                 }
               },
               {

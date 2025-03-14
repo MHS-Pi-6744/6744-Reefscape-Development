@@ -3,10 +3,11 @@
   "robotLength": 0.889,
   "holonomicMode": true,
   "pathFolders": [
+    "L1-comp-path",
     "Leo_Path",
     "Move_Forward_Long",
     "Move_Forward_Short",
-    "L1-comp-path"
+    "L2-comp-path"
   ],
   "autoFolders": [
     "L1-comp-auto",
