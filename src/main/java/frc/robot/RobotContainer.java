@@ -143,7 +143,7 @@ public class RobotContainer {
 
   // Driver controller - mdriverController
     // Right trigger sets swerve in X configuration
-    m_driverController.rightTrigger()
+    m_driverController.leftTrigger()
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive
