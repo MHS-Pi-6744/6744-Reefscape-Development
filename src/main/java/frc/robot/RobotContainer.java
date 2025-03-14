@@ -93,6 +93,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", m_shooter.olIntakeCommand());
     NamedCommands.registerCommand("Reverse", m_shooter.reverseIntakeCommand());
     NamedCommands.registerCommand("Shoot", m_shooter.releaseCommand());
+    NamedCommands.registerCommand("Stop", m_shooter.stopMotor());
 
     m_chooser.addOption("preload_Auto", new PathPlannerAuto("preload_Auto"));
     m_chooser.addOption("L2_JI_C2", new PathPlannerAuto("L2_JI_C2"));
