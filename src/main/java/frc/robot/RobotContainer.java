@@ -93,6 +93,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("Reverse", m_shooter.reverseIntakeCommand());
     NamedCommands.registerCommand("Shoot", m_shooter.releaseCommand());
 
+
+    // Planned auto for 1 preloaded coral going to Level 2 on Reef H starting in the middle of the field
+    m_chooser.addOption("preload_Auto", new PathPlannerAuto("preload_Auto"));
+
     m_chooser.addOption("DR-L2 Auto", new PathPlannerAuto("DR-L2 Auto"));
     m_chooser.addOption("DR-Wait Auto", new PathPlannerAuto("DR-Wait Auto"));
     m_chooser.addOption("Do Nothing", new Command(){});
