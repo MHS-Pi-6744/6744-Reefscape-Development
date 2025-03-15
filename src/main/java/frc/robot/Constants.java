@@ -149,8 +149,8 @@ public final class Constants {
 
   public static final class ColorSensorConstants {
     public static final I2C.Port kSensorPort = I2C.Port.kOnboard;
-    public static final Color m_white = Color.kBlack;
-    public static final Color m_black = Color.kWhite;
+    public static final Color m_black = Color.kBlack;
+    public static final Color m_white = Color.kWhite;
   }
 
   public static final class AutoConstants {
