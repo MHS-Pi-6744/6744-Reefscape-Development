@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -148,6 +149,8 @@ public final class Constants {
 
   public static final class ColorSensorConstants {
     public static final I2C.Port kSensorPort = I2C.Port.kOnboard;
+    public static final Color m_white = Color.kBlack;
+    public static final Color m_black = Color.kWhite;
   }
 
   public static final class AutoConstants {

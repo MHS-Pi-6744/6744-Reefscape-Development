@@ -1,4 +1,6 @@
 package frc.robot.subsystems;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -8,6 +10,8 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ColorSensorConstants;
@@ -28,6 +32,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(ColorSensorConstants.kSensorPort);
   
 
+    private final ColorMatch m_colorMatcher = new ColorMatch();
 
 
 
@@ -54,18 +59,15 @@ public class ShooterSubsystem extends SubsystemBase{
 
         // Zero shooter encoder on initialization
         m_shootEncoder.setPosition(0);
+        m_colorMatcher.addColorMatch(ColorSensorConstants.m_black);
+        m_colorMatcher.addColorMatch(ColorSensorConstants.m_white);
     }
 
     //Shooter Commands
     public boolean isWhite(){
-        int blue = m_colorSensor.getBlue();
-        int red = m_colorSensor.getRed();
-        int green = m_colorSensor.getGreen();
-
-       
-        
-
-        return (red > 7800 && green > 14600 && blue > 7800);
+        Color detectedColor = m_colorSensor.getColor();
+        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+        return match.color == ColorSensorConstants.m_white;
       }
 
     public Command stopMotor(){
@@ -115,8 +117,9 @@ public class ShooterSubsystem extends SubsystemBase{
     SmartDashboard.putNumber("Shooter Motor V", m_shootEncoder.getVelocity());
 
     SmartDashboard.putBoolean("Shooter Full", isWhite());
-
+    */
     SmartDashboard.getBoolean("Color Sensor", isWhite());
+    /*
     SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
     SmartDashboard.putNumber("Red", m_colorSensor.getRed());
     SmartDashboard.putNumber("Green", m_colorSensor.getGreen());
