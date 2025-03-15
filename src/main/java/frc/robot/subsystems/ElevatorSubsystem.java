@@ -56,8 +56,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_cal = m_shepherd.getAbsoluteEncoder();
 
-    e_sheep.setPosition(0);
     e_shepherd.setPosition(0);
+    e_sheep.setPosition(0);
 
     // e_shepherd.setPosition(e_cal.getPosition());
     // e_sheep.setPosition(e_cal.getPosition());
@@ -87,6 +87,13 @@ public class ElevatorSubsystem extends SubsystemBase {
   public Command resetElevator() {
     return run(() -> e_shepherd.setPosition(0));
   };
+
+  public Command slowBottom() {
+    return startEnd(
+      () -> m_shepherd.set(-0.1),
+      () -> m_shepherd.set(0)
+      );
+  }
 
   public void setArmCoastMode(){
     SparkMaxConfig c_mod = new SparkMaxConfig();

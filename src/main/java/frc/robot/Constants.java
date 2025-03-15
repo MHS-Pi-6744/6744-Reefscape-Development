@@ -105,7 +105,7 @@ public final class Constants {
     /** The soft limit for the elevator going backward.
      * @apiNote This soft limit should NEVER go below 1
      */
-    public static final double kRevSoftLimit = 1;
+    public static final double kRevSoftLimit = -23;
 
     /** The allowed tolerance for the elevator
      * @apiNote This value is in inches
