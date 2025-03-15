@@ -30,6 +30,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
@@ -99,7 +105,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.333
+                  "waitTime": 0.666
                 }
               }
             ]
