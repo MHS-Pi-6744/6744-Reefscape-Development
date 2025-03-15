@@ -68,7 +68,13 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = m_colorSensor.getColor();
         ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
         return match.color == ColorSensorConstants.m_white;
-      }
+    }
+
+    public Color something() {
+        Color detectedColor = m_colorSensor.getColor();
+        ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+        return match.color;
+    }
 
     public Command stopMotor(){
         return run(
@@ -118,7 +124,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     SmartDashboard.putBoolean("Shooter Full", isWhite());
     */
-    SmartDashboard.getBoolean("Color Sensor", isWhite());
+    SmartDashboard.putBoolean("Color Sensor", isWhite());
+    SmartDashboard.putString("Closest Color", something().toString());
     /*
     SmartDashboard.putNumber("Blue", m_colorSensor.getBlue());
     SmartDashboard.putNumber("Red", m_colorSensor.getRed());
