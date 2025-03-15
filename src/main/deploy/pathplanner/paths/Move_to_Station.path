@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.916217948717948,
-        "y": 3.8495512820512823
+        "x": 5.333250000000861,
+        "y": 5.204749999994975
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.122628205128205,
-        "y": 6.027179487179488
+        "x": 3.1200000000008603,
+        "y": 6.530749999994974
       },
       "isLocked": false,
       "linkedName": "coralEnd1"
     },
     {
       "anchor": {
-        "x": 1.4887179487179483,
-        "y": 7.2243589743589745
+        "x": 1.599,
+        "y": 7.09625
       },
       "prevControl": {
-        "x": 5.81301282051282,
-        "y": 6.29551282051282
+        "x": 3.2272499999999997,
+        "y": 6.16025
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "L1-comp-path",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -120.762719534239
   },
   "useDefaultConstraints": true
 }

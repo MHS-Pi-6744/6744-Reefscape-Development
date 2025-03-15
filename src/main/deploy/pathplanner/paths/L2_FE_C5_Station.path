@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.348589743589744,
-        "y": 2.8691025641025636
+        "x": 5.37225,
+        "y": 2.7575
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.108295454545455,
-        "y": 1.9957812499999998
+        "x": 4.131955710955711,
+        "y": 1.884178685897436
       },
       "isLocked": false,
       "linkedName": "L1_FE_C5_End1"
     },
     {
       "anchor": {
-        "x": 1.4857670454545455,
-        "y": 0.8490482954545451
+        "x": 1.5307499999999998,
+        "y": 0.9342499999999996
       },
       "prevControl": {
-        "x": 4.068409090909091,
-        "y": 2.0157244318181817
+        "x": 4.113392045454545,
+        "y": 2.1009261363636367
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 118.39301942138319
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
