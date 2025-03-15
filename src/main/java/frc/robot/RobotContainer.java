@@ -176,7 +176,8 @@ public class RobotContainer {
     m_driverController.rightTrigger().whileTrue(m_shooter.releaseCommand());
     // Left trigger intakes coral
     m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
-            
+    // Pilot D-Pad Down to Reset the elevator
+    m_driverController2.povDown().onTrue(m_elevator.slowBottom()).toggleOnFalse(m_elevator.resetElevator());     
   }
 
   public Command getAutonomousCommand() {
