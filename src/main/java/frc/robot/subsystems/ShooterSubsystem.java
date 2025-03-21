@@ -62,9 +62,6 @@ public class ShooterSubsystem extends SubsystemBase{
         int red = m_colorSensor.getRed();
         int green = m_colorSensor.getGreen();
 
-       
-        
-
         return (red > 7800 && green > 14600 && blue > 7800);
       }
 
