@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -11,11 +12,19 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ElevatorConstants.Simulation;
 
 public class ElevatorSubsystem extends SubsystemBase {
   private SparkMax m_shepherd;
@@ -34,7 +43,18 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private double m_setpoint;
 
-  
+  private final ElevatorSim m_simulation;
+  private final DCMotor m_shepherdType;
+  private final SparkMaxSim s_shepherd;
+
+  private final Mechanism2d m_mech2d = new Mechanism2d(50, 50);
+  private final MechanismRoot2d m_mech2dRoot = m_mech2d.getRoot("ElevatorArm Root", 25, 0);
+  private final MechanismLigament2d m_elevatorMech2d =
+      m_mech2dRoot.append(
+          new MechanismLigament2d(
+              "Elevator",
+              10,
+              90));
 
   public ElevatorSubsystem() {
     m_shepherd = new SparkMax(ElevatorConstants.kShepherdCanId, SparkMax.MotorType.kBrushless);
@@ -61,6 +81,21 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     // e_shepherd.setPosition(e_cal.getPosition());
     // e_sheep.setPosition(e_cal.getPosition());
+
+
+    m_shepherdType = DCMotor.getNEO(1);
+    s_shepherd = new SparkMaxSim(m_shepherd, m_shepherdType);
+
+    m_simulation = new ElevatorSim(
+      m_shepherdType,
+      ElevatorConstants.kHolyRatio,
+      ElevatorConstants.Simulation.kCarriageMassKg,
+      ElevatorConstants.Simulation.kElevatorDrumRadius,
+      Units.inchesToMeters(ElevatorConstants.kRevSoftLimit),
+      Units.inchesToMeters(1/*ElevatorConstants.kFwdSoftLimit*/),
+      false,
+      2
+    );
   }
 
   public boolean atTargetPosition() {
@@ -119,5 +154,24 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
+
+    m_elevatorMech2d.setLength(
+        100
+        * (e_shepherd.getPosition() / ElevatorConstants.kHolyRatio)
+        * (Simulation.kElevatorDrumRadius * 2.0 * Math.PI));
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    SmartDashboard.putData("Sim Test Thingy", m_mech2d);
+    m_simulation.setInput(m_shepherd.getAppliedOutput() * RobotController.getBatteryVoltage());
+    m_simulation.update(0.020);
+    s_shepherd.iterate(
+        ((m_simulation.getVelocityMetersPerSecond()
+                    / (Simulation.kElevatorDrumRadius * 2.0 * Math.PI))
+                * ElevatorConstants.kHolyRatio)
+            * 60.0,
+        RobotController.getBatteryVoltage(),
+        0.02);
   }
 }

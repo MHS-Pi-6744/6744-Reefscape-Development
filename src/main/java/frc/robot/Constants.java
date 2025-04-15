@@ -58,9 +58,15 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
+    public static final class Simulation {
+      public static final double kCarriageMassKg = 1.0;
+      public static final double kElevatorDrumRadius = 1.0;
+    }
     /** The Holy Ratio is the ratio that converts the internal rotation count of
-     * the elevator motor to the position of the bottom of the elevator in inches
+     * the elevator motor to the position of the elevator in inches
      * @apiNote The holy ratio is {@value}
+     * @apiNote 2.69035533 * {@value} = 1
+     * @apiNote 530:197 is an equivilent ratio maybe???
      * @apiNote NEVER EVER CHANGE THIS CONSTANT EVER OR I'M GONNA MURDER YOU WITH HAMMERS 
      */
     public static final double kHolyRatio = 24.625/66.25;
