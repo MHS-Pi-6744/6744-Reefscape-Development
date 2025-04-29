@@ -94,7 +94,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       Units.inchesToMeters(ElevatorConstants.kRevSoftLimit),
       Units.inchesToMeters(1/*ElevatorConstants.kFwdSoftLimit*/),
       false,
-      2
+      1
     );
   }
 
@@ -154,11 +154,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
-
-    m_elevatorMech2d.setLength(
-        100
-        * (e_shepherd.getPosition() / ElevatorConstants.kHolyRatio)
-        * (Simulation.kElevatorDrumRadius * 2.0 * Math.PI));
+  
+    m_elevatorMech2d.setLength(m_setpoint);
   }
 
   @Override
@@ -166,12 +163,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putData("Sim Test Thingy", m_mech2d);
     m_simulation.setInput(m_shepherd.getAppliedOutput() * RobotController.getBatteryVoltage());
     m_simulation.update(0.020);
-    s_shepherd.iterate(
-        ((m_simulation.getVelocityMetersPerSecond()
-                    / (Simulation.kElevatorDrumRadius * 2.0 * Math.PI))
-                * ElevatorConstants.kHolyRatio)
-            * 60.0,
-        RobotController.getBatteryVoltage(),
-        0.02);
+    e_shepherd.setPosition(Units.metersToInches(m_simulation.getPositionMeters()));
   }
 }
