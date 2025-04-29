@@ -14,8 +14,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.BatterySim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.simulation.RoboRioSim;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -24,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.ElevatorConstants.Simulation;
 
 public class ElevatorSubsystem extends SubsystemBase {
   private SparkMax m_shepherd;
@@ -96,6 +96,8 @@ public class ElevatorSubsystem extends SubsystemBase {
       false,
       1
     );
+
+    SmartDashboard.putData("Sim Test Thingy", m_mech2d);
   }
 
   public boolean atTargetPosition() {
@@ -154,15 +156,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shepherd Velocity", e_shepherd.getVelocity());
     SmartDashboard.putNumber("Setpoint", m_setpoint);
     SmartDashboard.putBoolean("At Target", atTargetPosition());
-  
-    m_elevatorMech2d.setLength(m_setpoint);
   }
 
   @Override
   public void simulationPeriodic() {
-    SmartDashboard.putData("Sim Test Thingy", m_mech2d);
-    m_simulation.setInput(m_shepherd.getAppliedOutput() * RobotController.getBatteryVoltage());
-    m_simulation.update(0.020);
-    e_shepherd.setPosition(Units.metersToInches(m_simulation.getPositionMeters()));
+    m_simulation.setInput(s_shepherd.getAppliedOutput() * RoboRioSim.getVInVoltage());
+    m_simulation.update(0.02);
+    RoboRioSim.setVInVoltage(
+      BatterySim.calculateDefaultBatteryLoadedVoltage(m_simulation.getCurrentDrawAmps()));
+    m_elevatorMech2d.setLength(m_simulation.getPositionMeters());
   }
 }
