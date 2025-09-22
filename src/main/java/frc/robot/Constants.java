@@ -177,4 +177,8 @@ public final class Constants {
     //  public static final double k_shootDistance = 4.0; //inches (for later)
     public static final double k_shooterintakeSpeed = 0.3;
   }
+
+  public static final class ArmConstants {
+    public static final int kCanId = -1;
+  }
 }

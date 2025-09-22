@@ -110,4 +110,9 @@ public final class Configs {
         .forwardSoftLimitEnabled(true);
       }
     }
+    public static final class ClimberSubsystem {
+      public static final SparkMaxConfig armConfig = new SparkMaxConfig();
+
+      // TODO: Actually make configs later
+    }
 }
