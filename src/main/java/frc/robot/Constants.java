@@ -180,5 +180,6 @@ public final class Constants {
 
   public static final class ArmConstants {
     public static final int kCanId = -1;
+    public static final double kPositionTolerance = 0.5;
   }
 }
