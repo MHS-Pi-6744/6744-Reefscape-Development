@@ -5,6 +5,7 @@ import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ModuleConstants;
 
@@ -113,6 +114,32 @@ public final class Configs {
     public static final class ClimberSubsystem {
       public static final SparkMaxConfig armConfig = new SparkMaxConfig();
 
-      // TODO: Actually make configs later
+      static {
+      armConfig
+        .idleMode(ArmConstants.kIdleMode)
+        .smartCurrentLimit(ArmConstants.kCurrentLimit)
+        .inverted(false);
+      armConfig.absoluteEncoder
+        .inverted(false)
+        .zeroOffset(ArmConstants.kZeroOffest)
+        .zeroCentered(true);
+      armConfig.encoder
+        .positionConversionFactor(ArmConstants.kPositionConversionFactor)
+        .velocityConversionFactor(ArmConstants.kVelocityConversionFactor);
+      armConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .pid(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD)
+        .outputRange(-1, 1)
+        .maxMotion    
+        .maxVelocity(ArmConstants.kMaxVelocity)
+        .maxAcceleration(ArmConstants.kMaxAcceleration)
+        .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+        .allowedClosedLoopError(ArmConstants.kPositionTolerance);
+      armConfig.softLimit
+        .forwardSoftLimit(ArmConstants.kFwdSoftLimit)
+        .reverseSoftLimit(ArmConstants.kRevSoftLimit)
+        .reverseSoftLimitEnabled(true)
+        .forwardSoftLimitEnabled(true);
+      }
     }
 }
