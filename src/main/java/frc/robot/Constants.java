@@ -179,7 +179,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final byte kCanId = 7;
+    public static final byte kCanId = 5;
     public static final double kPositionTolerance = 0.5;
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final int kCurrentLimit = 50;
