@@ -184,8 +184,8 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final int kCurrentLimit = 50;
     public static final double kZeroOffest = 0;
-    // public static final double kPositionConversionFactor = 0;
-    // public static final double kVelocityConversionFactor = 0;
+    public static final double kPositionConversionFactor = 0;
+    public static final double kVelocityConversionFactor = 0;
     // public static final double kP = 0;
     // public static final double kI = 0;
     // public static final double kD = 0;

@@ -119,16 +119,11 @@ public final class Configs {
         .idleMode(ArmConstants.kIdleMode)
         .smartCurrentLimit(ArmConstants.kCurrentLimit)
         .inverted(false);
-      armConfig.absoluteEncoder
-        .inverted(false)
-        .zeroOffset(ArmConstants.kZeroOffest)
-        .zeroCentered(true);
       armConfig.encoder
         .positionConversionFactor(ArmConstants.kPositionConversionFactor)
         .velocityConversionFactor(ArmConstants.kVelocityConversionFactor);
       armConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-        .pid(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD)
         .outputRange(-1, 1)
         .maxMotion    
         .maxVelocity(ArmConstants.kMaxVelocity)
