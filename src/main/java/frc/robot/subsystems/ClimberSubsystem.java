@@ -9,6 +9,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ArmConstants;
@@ -78,6 +79,13 @@ public class ClimberSubsystem extends SubsystemBase {
    */
   boolean atTarget() {
     return Math.abs(e_arm.getPosition() - m_setpoint) <= ArmConstants.kPositionTolerance;
+  }
+
+  public Command stickControl(double stick) {
+    return startEnd(
+      () -> m_arm.set(stick * ArmConstants.kStickMultiplier),
+      () -> m_arm.set(0)
+    );
   }
 
   @Override
