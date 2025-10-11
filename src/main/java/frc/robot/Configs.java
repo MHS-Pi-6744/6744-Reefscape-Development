@@ -122,6 +122,7 @@ public final class Configs {
       armConfig.encoder
         .positionConversionFactor(ArmConstants.kPositionConversionFactor)
         .velocityConversionFactor(ArmConstants.kVelocityConversionFactor);
+      /*
       armConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .outputRange(-1, 1)
@@ -130,6 +131,7 @@ public final class Configs {
         .maxAcceleration(ArmConstants.kMaxAcceleration)
         .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
         .allowedClosedLoopError(ArmConstants.kPositionTolerance);
+      */
       armConfig.softLimit
         .forwardSoftLimit(ArmConstants.kFwdSoftLimit)
         .reverseSoftLimit(ArmConstants.kRevSoftLimit)
