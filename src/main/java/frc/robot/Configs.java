@@ -134,8 +134,8 @@ public final class Configs {
         .allowedClosedLoopError(ArmConstants.kPositionTolerance);
       */
       armConfig.softLimit
-        .forwardSoftLimit(ArmConstants.kFwdSoftLimit)
         .reverseSoftLimit(ArmConstants.kRevSoftLimit)
+        .forwardSoftLimit(ArmConstants.kFwdSoftLimit)
         .reverseSoftLimitEnabled(true)
         .forwardSoftLimitEnabled(true);
       }
