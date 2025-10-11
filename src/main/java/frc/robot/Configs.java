@@ -118,7 +118,7 @@ public final class Configs {
       armConfig
         .idleMode(ArmConstants.kIdleMode)
         .smartCurrentLimit(ArmConstants.kCurrentLimit)
-        .inverted(true);
+        .inverted(false);
       armConfig.absoluteEncoder
         .inverted(true)
         .positionConversionFactor(ArmConstants.kPositionConversionFactor)

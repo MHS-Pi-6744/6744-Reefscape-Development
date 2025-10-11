@@ -79,19 +79,16 @@ public class ClimberSubsystem extends SubsystemBase {
     return Math.abs(e_arm.getPosition() - m_setpoint) <= ArmConstants.kPositionTolerance;
   }
 
-  /**
-   * 
-   * Command to set motor speed to an arbitrary value.
-   * Used for controlling with stick.
-   * 
-   * @author MattheDev53
-   * 
-   * @param stick set the motor to this speed times the {@link frc.robot.Constants.ArmConstants.kStickMultiplier} 
-   * @return command that sets motor speed
-   */
-  public Command stickControl(double stick) {
-    return run(
-      () -> m_arm.set(stick * ArmConstants.kStickMultiplier)
+  public Command motorFwd() {
+    return startEnd(
+      () -> m_arm.set(1 * ArmConstants.kStickMultiplier),
+      () -> m_arm.set(0)
+    );
+  }
+  public Command motorRev() {
+    return startEnd(
+      () -> m_arm.set(-1 * ArmConstants.kStickMultiplier),
+      () -> m_arm.set(0)
     );
   }
 
@@ -99,7 +96,6 @@ public class ClimberSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Arm Angle", e_arm.getPosition());
     SmartDashboard.putNumber("Arm Velocity", e_arm.getVelocity());
-    SmartDashboard.putNumber("Set Point", m_setpoint);
     SmartDashboard.putBoolean("Arm At Target?", atTarget());
   }
 }
