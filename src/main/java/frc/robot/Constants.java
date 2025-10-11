@@ -186,12 +186,13 @@ public final class Constants {
     public static final double kZeroOffest = 0;
     public static final double kPositionConversionFactor = 0;
     public static final double kVelocityConversionFactor = 0;
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double kMaxVelocity = 0;
-    public static final double kMaxAcceleration = 0;
+    // public static final double kP = 0;
+    // public static final double kI = 0;
+    // public static final double kD = 0;
+    // public static final double kMaxVelocity = 0;
+    // public static final double kMaxAcceleration = 0;
     public static final double kFwdSoftLimit = 0;
     public static final double kRevSoftLimit = 0;
+    public static final double kStickMultiplier = 1;
   }
 }
