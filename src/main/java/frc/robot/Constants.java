@@ -193,6 +193,6 @@ public final class Constants {
     // public static final double kMaxAcceleration = 0;
     public static final double kFwdSoftLimit = -1;
     public static final double kRevSoftLimit = 90;
-    public static final double kStickMultiplier = 1;
+    public static final double kStickMultiplier = 0.5;
   }
 }

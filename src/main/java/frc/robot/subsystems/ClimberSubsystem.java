@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -80,8 +79,18 @@ public class ClimberSubsystem extends SubsystemBase {
     return Math.abs(e_arm.getPosition() - m_setpoint) <= ArmConstants.kPositionTolerance;
   }
 
+  /**
+   * 
+   * Command to set motor speed to an arbitrary value.
+   * Used for controlling with stick.
+   * 
+   * @author MattheDev53
+   * 
+   * @param stick set the motor to this speed times the {@link frc.robot.Constants.ArmConstants.kStickMultiplier} 
+   * @return command that sets motor speed
+   */
   public Command stickControl(double stick) {
-    return (
+    return run(
       () -> m_arm.set(stick * ArmConstants.kStickMultiplier)
     );
   }
