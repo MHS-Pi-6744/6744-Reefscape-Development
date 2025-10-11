@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.107750000000001,
-        "y": 4.0055
+        "x": 5.37225,
+        "y": 2.7575
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.659250000003456,
-        "y": 4.8537500000045615
+        "x": 4.131955710955711,
+        "y": 1.884178685897436
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "L1_FE_C5_End1"
     },
     {
       "anchor": {
-        "x": 5.362500000003456,
-        "y": 5.195000000004561
+        "x": 1.174795081967213,
+        "y": 0.95015368852459
       },
       "prevControl": {
-        "x": 5.674500000003455,
-        "y": 5.156000000004562
+        "x": 3.757437127421758,
+        "y": 2.1168298248882276
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.762719534239
+    "rotation": 56.309932474020215
   },
   "reversed": false,
   "folder": "L1-comp-path",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 118.39301942138319
   },
   "useDefaultConstraints": false
 }

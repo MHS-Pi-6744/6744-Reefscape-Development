@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "DR-L2 Path"
+            "pathName": "L1_JI_C2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Leo_Auto",
+  "folder": "L1-comp-auto",
   "choreoAuto": false
 }

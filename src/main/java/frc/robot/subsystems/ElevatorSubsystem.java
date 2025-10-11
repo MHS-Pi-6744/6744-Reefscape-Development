@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ElevatorConstants;
@@ -55,8 +56,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     e_cal = m_shepherd.getAbsoluteEncoder();
 
-    e_sheep.setPosition(0);
     e_shepherd.setPosition(0);
+    e_sheep.setPosition(0);
 
     // e_shepherd.setPosition(e_cal.getPosition());
     // e_sheep.setPosition(e_cal.getPosition());
@@ -81,6 +82,17 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void stickControl(double stick) {
     m_shepherd.set(stick);
+  }
+
+  public Command resetElevator() {
+    return run(() -> e_shepherd.setPosition(0));
+  };
+
+  public Command slowBottom() {
+    return startEnd(
+      () -> m_shepherd.set(-0.1),
+      () -> m_shepherd.set(0)
+      );
   }
 
   public void setArmCoastMode(){

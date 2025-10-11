@@ -14,6 +14,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Leo_Auto",
   "choreoAuto": false
 }
