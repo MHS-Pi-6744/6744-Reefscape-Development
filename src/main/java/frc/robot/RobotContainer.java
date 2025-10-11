@@ -180,7 +180,8 @@ public class RobotContainer {
     m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
     // Pilot D-Pad Down to Reset the elevator
     m_driverController2.povDown().onTrue(m_elevator.slowBottom()).toggleOnFalse(m_elevator.resetElevator());     
-    m_driverController2.povLeft().onTrue(m_climber.motorFwd());
+    m_driverController2.povRight().onTrue(m_climber.motorFwd());
+    m_driverController2.povLeft().onTrue(m_climber.motorRev());
   }
 
   public Command getAutonomousCommand() {

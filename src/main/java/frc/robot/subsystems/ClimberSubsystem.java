@@ -26,6 +26,8 @@ public class ClimberSubsystem extends SubsystemBase {
   private SparkAbsoluteEncoder e_arm;
   private SparkClosedLoopController p_arm; //...esean cheese
 
+  private double m_speed;
+
   /**
    * 
    * Where should the arm be at?
@@ -43,6 +45,8 @@ public class ClimberSubsystem extends SubsystemBase {
     p_arm = m_arm.getClosedLoopController();
 
     m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    m_speed = 0.1;
   }
 
   /**
@@ -81,13 +85,13 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public Command motorFwd() {
     return startEnd(
-      () -> m_arm.set(1 * ArmConstants.kStickMultiplier),
+      () -> m_arm.set(m_speed * -1),
       () -> m_arm.set(0)
     );
   }
   public Command motorRev() {
     return startEnd(
-      () -> m_arm.set(-1 * ArmConstants.kStickMultiplier),
+      () -> m_arm.set(m_speed),
       () -> m_arm.set(0)
     );
   }

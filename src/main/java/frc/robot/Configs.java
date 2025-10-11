@@ -136,8 +136,8 @@ public final class Configs {
       armConfig.softLimit
         .reverseSoftLimit(ArmConstants.kRevSoftLimit)
         .forwardSoftLimit(ArmConstants.kFwdSoftLimit)
-        .reverseSoftLimitEnabled(true)
-        .forwardSoftLimitEnabled(true);
+        .reverseSoftLimitEnabled(false)
+        .forwardSoftLimitEnabled(false);
       }
     }
 }
