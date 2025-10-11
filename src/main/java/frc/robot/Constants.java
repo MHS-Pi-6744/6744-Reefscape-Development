@@ -183,16 +183,16 @@ public final class Constants {
     public static final double kPositionTolerance = 0.5;
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final int kCurrentLimit = 50;
-    public static final double kZeroOffest = 0;
-    public static final double kPositionConversionFactor = 0;
-    public static final double kVelocityConversionFactor = 0;
+    public static final double kZeroOffest = 0.7512391;
+    public static final double kPositionConversionFactor = 360;
+    public static final double kVelocityConversionFactor = 1;
     // public static final double kP = 0;
     // public static final double kI = 0;
     // public static final double kD = 0;
     // public static final double kMaxVelocity = 0;
     // public static final double kMaxAcceleration = 0;
-    public static final double kFwdSoftLimit = 0;
-    public static final double kRevSoftLimit = 0;
+    public static final double kFwdSoftLimit = -1;
+    public static final double kRevSoftLimit = 90;
     public static final double kStickMultiplier = 1;
   }
 }

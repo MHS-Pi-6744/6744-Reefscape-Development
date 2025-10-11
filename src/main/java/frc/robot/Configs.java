@@ -118,8 +118,9 @@ public final class Configs {
       armConfig
         .idleMode(ArmConstants.kIdleMode)
         .smartCurrentLimit(ArmConstants.kCurrentLimit)
-        .inverted(false);
-      armConfig.encoder
+        .inverted(true);
+      armConfig.absoluteEncoder
+        .inverted(true)
         .positionConversionFactor(ArmConstants.kPositionConversionFactor)
         .velocityConversionFactor(ArmConstants.kVelocityConversionFactor);
       /*

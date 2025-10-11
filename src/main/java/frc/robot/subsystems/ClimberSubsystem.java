@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -23,7 +24,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   private SparkMax m_arm;
   private SparkMaxConfig c_arm;
-  private RelativeEncoder e_arm;
+  private SparkAbsoluteEncoder e_arm;
   private SparkClosedLoopController p_arm; //...esean cheese
 
   /**
@@ -39,12 +40,10 @@ public class ClimberSubsystem extends SubsystemBase {
     c_arm = Configs.ClimberSubsystem.armConfig;
 
     m_arm = new SparkMax(ArmConstants.kCanId, SparkMax.MotorType.kBrushless);
-    e_arm = m_arm.getEncoder();
+    e_arm = m_arm.getAbsoluteEncoder();
     p_arm = m_arm.getClosedLoopController();
 
     m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    
-    e_arm.setPosition(0);
   }
 
   /**
@@ -82,9 +81,8 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public Command stickControl(double stick) {
-    return startEnd(
-      () -> m_arm.set(stick * ArmConstants.kStickMultiplier),
-      () -> m_arm.set(0)
+    return (
+      () -> m_arm.set(stick * ArmConstants.kStickMultiplier)
     );
   }
 
