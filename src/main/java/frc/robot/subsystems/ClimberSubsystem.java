@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -22,6 +24,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private SparkMax m_arm;
   private SparkMaxConfig c_arm;
   private SparkAbsoluteEncoder e_arm;
+  private SparkClosedLoopController p_arm;
 
   private double m_speed;
 
@@ -39,23 +42,39 @@ public class ClimberSubsystem extends SubsystemBase {
 
     m_arm = new SparkMax(ArmConstants.kCanId, SparkMax.MotorType.kBrushless);
     e_arm = m_arm.getAbsoluteEncoder();
+    p_arm = m_arm.getClosedLoopController();
 
     m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     m_speed = 0.1;
   }
 
+  public boolean atTargetRotation() {
+    return Math.abs(avgEncoderPos() - m_setpoint) < ArmConstants.kPositionTolerance;
+  }
+
+  public double avgEncoderPos() {
+    return (e_arm.getPosition() + e_arm.getPosition()) / 2;
+  }
+
+  public void setTargetPosition(double setpoint) {
+    m_setpoint = setpoint;
+    moveToSetpoint();
+  }
+
+  private void moveToSetpoint() {
+    p_arm.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
+  }
+
+  public Command resetArm() {
+    return run(() -> p_arm.setReference(0.0, ControlType.kMAXMotionPositionControl));
+  }
+
   public Command motorFwd() {
-    return startEnd(
-      () -> m_arm.set(m_speed * -1),
-      () -> m_arm.set(0)
-    );
+    return run(() -> setTargetPosition(72.0));
   }
   public Command motorRev() {
-    return startEnd(
-      () -> m_arm.set(m_speed),
-      () -> m_arm.set(0)
-    );
+    return run(() -> m_arm.set(-45.0));
   }
 
   @Override
