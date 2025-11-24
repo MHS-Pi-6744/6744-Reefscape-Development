@@ -68,25 +68,11 @@ public class ClimberSubsystem extends SubsystemBase {
   public double avgEncoderPos() { // Gets encoder pos
     return e_arm.getPosition();
   }
-
-  public void setTargetPosition(double setpoint) { // Sets the TargetPosition
-    m_setpoint = setpoint;
-    moveToSetpoint();
-  }
-
-  private void moveToSetpoint() { // Moves arm to a certain point
-    p_arm.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
-  }
-
   public Command resetArm() { // Resets arm value
-    return run(() -> p_arm.setReference(0.0, ControlType.kMAXMotionPositionControl));
+    return run(() -> e_arm.setPosition(0.0));
   }
-
   public Command motorFwd() {
     return run(() -> setTargetPosition(72.0));
-  }
-  public Command resetArm() {
-    return run(() -> p_arm.setReference(0.0, ControlType.kMAXMotionPositionControl));
   }
   public Command motorRev() {
     return run(() -> setTargetPosition(-45.0));
