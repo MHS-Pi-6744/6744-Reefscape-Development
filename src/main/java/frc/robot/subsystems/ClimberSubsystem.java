@@ -37,7 +37,7 @@ public class ClimberSubsystem extends SubsystemBase {
    * @author MattheDev53
    * 
    */
-  double m_setpoint;
+  public double m_setpoint = 0;
   
   public ClimberSubsystem() {
     c_arm = Configs.ClimberSubsystem.armConfig;
@@ -47,9 +47,18 @@ public class ClimberSubsystem extends SubsystemBase {
     e_arm = m_arm.getEncoder();
     p_arm = m_arm.getClosedLoopController();
 
-    m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    p_arm = m_arm.getClosedLoopController();
 
-    m_speed = 0.1;
+    m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_speed = 0.1;
+  }
+    public void setTargetPosition(double setpoint) {
+      m_setpoint = setpoint;
+      moveToSetpoint();
+  }
+
+  private void moveToSetpoint() {
+    p_arm.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
   public boolean atTargetRotation() { // Lets the Target rotation by subtracting Encoder pos by the set point
@@ -76,10 +85,12 @@ public class ClimberSubsystem extends SubsystemBase {
   public Command motorFwd() {
     return run(() -> setTargetPosition(72.0));
   }
+  public Command resetArm() {
+    return run(() -> p_arm.setReference(0.0, ControlType.kMAXMotionPositionControl));
+  }
   public Command motorRev() {
     return run(() -> setTargetPosition(-45.0));
   }
-
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Arm Angle", e_arm.getPosition());
