@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -23,7 +24,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
   private SparkMax m_arm;
   private SparkMaxConfig c_arm;
-  private SparkAbsoluteEncoder e_arm;
+  private RelativeEncoder e_arm;
+  private SparkAbsoluteEncoder e_cal;
   private SparkClosedLoopController p_arm;
 
   private double m_speed;
@@ -41,7 +43,8 @@ public class ClimberSubsystem extends SubsystemBase {
     c_arm = Configs.ClimberSubsystem.armConfig;
 
     m_arm = new SparkMax(ArmConstants.kCanId, SparkMax.MotorType.kBrushless);
-    e_arm = m_arm.getAbsoluteEncoder();
+    e_cal = m_arm.getAbsoluteEncoder();
+    e_arm = m_arm.getEncoder();
     p_arm = m_arm.getClosedLoopController();
 
     m_arm.configure(c_arm, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -49,24 +52,24 @@ public class ClimberSubsystem extends SubsystemBase {
     m_speed = 0.1;
   }
 
-  public boolean atTargetRotation() {
+  public boolean atTargetRotation() { // Lets the Target rotation by subtracting Encoder pos by the set point
     return Math.abs(avgEncoderPos() - m_setpoint) < ArmConstants.kPositionTolerance;
   }
 
-  public double avgEncoderPos() {
-    return (e_arm.getPosition() + e_arm.getPosition()) / 2;
+  public double avgEncoderPos() { // Gets encoder pos
+    return e_arm.getPosition();
   }
 
-  public void setTargetPosition(double setpoint) {
+  public void setTargetPosition(double setpoint) { // Sets the TargetPosition
     m_setpoint = setpoint;
     moveToSetpoint();
   }
 
-  private void moveToSetpoint() {
+  private void moveToSetpoint() { // Moves arm to a certain point
     p_arm.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
 
-  public Command resetArm() {
+  public Command resetArm() { // Resets arm value
     return run(() -> p_arm.setReference(0.0, ControlType.kMAXMotionPositionControl));
   }
 
@@ -74,7 +77,7 @@ public class ClimberSubsystem extends SubsystemBase {
     return run(() -> setTargetPosition(72.0));
   }
   public Command motorRev() {
-    return run(() -> m_arm.set(-45.0));
+    return run(() -> setTargetPosition(-45.0));
   }
 
   @Override
