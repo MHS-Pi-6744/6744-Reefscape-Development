@@ -60,7 +60,6 @@ public class ClimberSubsystem extends SubsystemBase {
   private void moveToSetpoint() {
     p_arm.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
   }
-
   public boolean atTargetRotation() { // Lets the Target rotation by subtracting Encoder pos by the set point
     return Math.abs(avgEncoderPos() - m_setpoint) < ArmConstants.kPositionTolerance;
   }
