@@ -182,6 +182,7 @@ public class RobotContainer {
     m_driverController2.povDown().onTrue(m_elevator.slowBottom()).toggleOnFalse(m_elevator.resetElevator());     
     m_driverController2.povRight().whileTrue(m_climber.motorFwd());
     m_driverController2.povLeft().whileTrue(m_climber.motorRev());
+    m_driverController2.povUp().onTrue(m_climber.resetArm());
   }
 
   public Command getAutonomousCommand() {
