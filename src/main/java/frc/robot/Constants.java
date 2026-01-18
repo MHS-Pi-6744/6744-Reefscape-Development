@@ -177,4 +177,21 @@ public final class Constants {
     //  public static final double k_shootDistance = 4.0; //inches (for later)
     public static final double k_shooterintakeSpeed = 0.3;
   }
+
+  public static final class ArmConstants {
+    public static final byte kCanId = 5;
+    public static final double kPositionTolerance = 0.5;
+    public static final IdleMode kIdleMode = IdleMode.kCoast;
+    public static final int kCurrentLimit = 50;
+    public static final double kZeroOffest = 0.7512391;
+    public static final double kPositionConversionFactor = 360;
+    public static final double kVelocityConversionFactor = 1;
+    // public static final double kP = 0;
+    // public static final double kI = 0;
+    // public static final double kD = 0;
+    // public static final double kMaxVelocity = 0;
+    // public static final double kMaxAcceleration = 0;
+    public static final double kRevSoftLimit = -1;
+    public static final double kFwdSoftLimit = 90;
+  }
 }

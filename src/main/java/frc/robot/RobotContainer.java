@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.auto.AutonomousCommand;
 import frc.robot.commands.auto.AutonomousCommand2;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 //import frc.robot.BuildConstants;
@@ -57,6 +58,7 @@ public class RobotContainer {
 // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final Command ele_GoLoad = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageLoad), m_elevator);
   public final Command ele_GoL1 = new InstantCommand(() -> m_elevator.setTargetPosition(ElevatorConstants.kStageL1), m_elevator);
@@ -178,6 +180,8 @@ public class RobotContainer {
     m_driverController2.rightTrigger().onTrue(m_shooter.olIntakeCommand()).onFalse(m_shooter.stopMotor());
     // Pilot D-Pad Down to Reset the elevator
     m_driverController2.povDown().onTrue(m_elevator.slowBottom()).toggleOnFalse(m_elevator.resetElevator());     
+    m_driverController2.povRight().whileTrue(m_climber.motorFwd());
+    m_driverController2.povLeft().whileTrue(m_climber.motorRev());
   }
 
   public Command getAutonomousCommand() {
